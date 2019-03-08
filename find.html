@@ -1,19 +1,93 @@
 <script src="C:/Users/fabri/Dropbox/Dev/Git/WatchAndCode/2_Testing/WatchAndCode/Array_methods_unit_tests/simpleTest.js"></script>
 <script>
 
-function find() {};
+// function find(array, callback, initialValue, optionalThis) {};
+function find(array, callback) {
+
+	if(Array.isArray(array) === false) {
+
+		// throw new TypeError(e + '.find is not a function')
+		throw new TypeError('.find is not a function')
+
+	} else {
+		callback();
+	}
+	
+}
 
 tests({
-	'It should look into an array': function() {},
-	'It should return the matching value': function() {},
-	'While condition is false, it should execute the callback function once per element': function() {},
-	'It should not execute callback on empty values': function() {},
-	'It should not execute the callback on erased elements': function() {},
-	'It should stop searching when the first value of the array is returned': function() {},
-	'If condition is not met, it should return undefined': function() {},
-	'It should not mutate the array taken as an agument': function() {},
-	'Elements added after the call of find won\'t be exected by the callback': function() {},
-	'Elements deleted after the call of find won\'t be executed by the callback': function() {}
-})
+	// 'it should pass the ith element as the first argument to the callback': function() {
+  //   find([1], function(number) {
+  //     eq(number, 1); // number should be equal to 1
+  //   });
+  // },
+  // 'It should pass in the ith position as the second argument to the callback': function() {
+  //   find([1], function(number, index) {
+  //     eq(index, 0);
+  //   });
+  // },
+  // 'It should pass in the original array as the third argument to the callback': function() {
+  //   var testArray = [1, 2, 3];
+  //   find(testArray, function(number, index, originalArray) {
+  //     // console.log(originalArray);
+  //     eq(originalArray, testArray);
+  //   });
+  // },
+
+	'It should take an array as an argument for the callback': function() {
+		var testArray = [1, 2]
+		find(testArray, function(element) {
+		})
+		eq(true, Array.isArray(testArray));
+	},
+	'It should throw an exception if the argument is not an array': function(){
+		var isTypeError = false;
+		var notAnArray = {};
+    try {
+      find(notAnArray, function () {});
+    } catch(e) {
+      isTypeError = (e instanceof TypeError);
+    }
+		eq(isTypeError, true);
+	},
+	'While condition is false, it should execute the callback function once per element': function() {
+		fail();
+	},
+	'It should return the matching value': function() {
+		fail();
+	},
+	'If condition is not met, it should return undefined': function() {
+		fail();
+	},
+	'It should accept an optional this object': function() {
+    // find([1], function() {
+			fail();
+			//   eq(this.description, 'I should be accessible inside of the callback');
+    // }, {description: 'I should be accessible inside of the callback'});
+	},
+	'It should not mutate the array taken as an agument': function() {
+		fail();
+	},
+
+	'It should not execute callback on empty values': function() {
+		fail();
+	},
+	'It should not execute the callback on erased elements': function() {
+		fail();
+	},
+
+	'Elements added after the call of find won\'t be exected by the callback': function() {
+		fail();
+	},
+	'Elements deleted after the call of find won\'t be executed by the callback': function() {
+		fail();
+	}
+});
+
+	// 'It should stop searching when the first value of the array is returned': function() {},
+
+
+
+
 
 </script>
