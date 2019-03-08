@@ -16,8 +16,8 @@ function find(array, callback) {
 			for(var i = 0; i < length; i++) {
 				callback();
 			}
-		//  } else {
-		// 		callback();
+		 } else {
+				callback();
 			}
 		}	
 		// while the condition is false and i < array.length, iterate within each array element
@@ -65,24 +65,32 @@ tests({
 		var numberOfCallBacks = 0;
 		
 		find(testArray,function(element) {
-			debugger;
-			// var i = 0;
-			// var n = 3;
 			while(element !== 10 && numberOfCallBacks < testArray.length) {
 				numberOfCallBacks++;
 			} return numberOfCallBacks;
 		})
 		eq(numberOfCallBacks, 4);
-		// check the element value
-		// check the number of callbacks
 	},
 	'It should return the matching value if the condition is true': function() {
-		fail();
-		// var filteredArray = filter([1, 2], function(number) {
-    //   return number > 1;
-    // });
-    // eq(filteredArray.length, 1);
-    // eq(filteredArray[0], 2);
+		var testArray = ['f', 'a', 'c', 3];
+		var numberOfCallBacks = 0;
+		
+		find(testArray,function(element) {
+			// debugger;
+			for(numberOfCallBacks; numberOfCallBacks < testArray.length; numberOfCallBacks++)
+			{	
+			// if(element !== 3) {
+				// 	// numberOfCallBacks++;
+
+				// } else if (element === 3) {
+				// 	return element;
+					// numberOfCallBacks++;
+					return element === 3
+				}
+			eq(numberOfCallBacks, 4);
+			eq(element, 3);
+		})
+		
 	},
 	'If condition is not met, it should return undefined': function() {
 		fail();
@@ -96,11 +104,11 @@ tests({
 	'It should not mutate the array taken as an agument': function() {
 		fail();
 	},
-
+	// 'It should not execute the callback on erased elements': function() {
+	// 	fail();
+	// },
+	
 	'It should not execute callback on empty values': function() {
-		fail();
-	},
-	'It should not execute the callback on erased elements': function() {
 		fail();
 	},
 
