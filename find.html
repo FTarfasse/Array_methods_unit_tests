@@ -2,7 +2,12 @@
 <script>
 
 // function find(array, callback, initialValue, optionalThis) {};
-function find(array, callback) {
+function find(array, callback, optionalThis) {
+	var findCallback = callback;
+
+  if(optionalThis) {
+    findCallback = callback.bind(optionalThis);
+  }
 
 	if(Array.isArray(array) === false) {
 
@@ -12,12 +17,12 @@ function find(array, callback) {
 		var length = array.length;
 		// var condition = false
 
-		if(Boolean(callback() === false)) {
+		if(Boolean(findCallback() === false)) {
 			for(var i = 0; i < length; i++) {
-				callback();
+				findCallback();
 			}
-		 } else {
-				callback();
+		} else {
+			findCallback();
 			}
 		}	
 		// while the condition is false and i < array.length, iterate within each array element
@@ -79,27 +84,25 @@ tests({
 			// debugger;
 			for(numberOfCallBacks; numberOfCallBacks < testArray.length; numberOfCallBacks++)
 			{	
-			// if(element !== 3) {
-				// 	// numberOfCallBacks++;
-
-				// } else if (element === 3) {
-				// 	return element;
-					// numberOfCallBacks++;
-					return element === 3
-				}
+				return element === 3
+			}
 			eq(numberOfCallBacks, 4);
 			eq(element, 3);
 		})
 		
 	},
 	'If condition is not met, it should return undefined': function() {
-		fail();
+		var isThereAFour = find([1, 2, 3], function(element) {
+			return element === 4
+		})
+		eq(isThereAFour, undefined);
 	},
 	'It should accept an optional this object': function() {
-    // find([1], function() {
-			fail();
-			//   eq(this.description, 'I should be accessible inside of the callback');
-    // }, {description: 'I should be accessible inside of the callback'});
+		// fail();
+    find([1], function() {
+			// debugger;
+			eq(this.description, 'I should be accessible inside of the callback');
+		}, {description: 'I should be accessible inside of the callback'});
 	},
 	'It should not mutate the array taken as an agument': function() {
 		fail();
