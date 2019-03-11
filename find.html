@@ -17,13 +17,13 @@ function find(array, callback, optionalThis) {
 		var length = array.length;
 		// var condition = false
 
-		if(Boolean(findCallback() === false)) {
+		// if(Boolean(findCallback() === false)) {
 			for(var i = 0; i < length; i++) {
-				findCallback();
+				findCallback(array[i], i, array);
 			}
-		} else {
-			findCallback();
-			}
+		// } else {
+		// 	findCallback();
+		// 	}
 		}	
 		// while the condition is false and i < array.length, iterate within each array element
 		// if the value of the callback is true ==> quit the loops
@@ -76,6 +76,22 @@ tests({
 		})
 		eq(numberOfCallBacks, 4);
 	},
+	'it should pass the ith element as the first argument to the callback': function() {
+    find([1], function(number) {
+      eq(number, 1); // number should be equal to 1
+    });
+  },
+  'It should pass in the ith position as the second argument to the callback': function() {
+    find([1], function(number, index) {
+      eq(index, 0);
+    });
+  },
+	'Callback function should have the array being processed as third argument': function() {
+		var testArray = [1, 2, 3]
+		find(testArray, function(number, index, array) {
+			eq(testArray, array);
+		})
+	},
 	'It should return the matching value if the condition is true': function() {
 		var testArray = ['f', 'a', 'c', 3];
 		var numberOfCallBacks = 0;
@@ -100,13 +116,12 @@ tests({
 	'It should accept an optional this object': function() {
 		// fail();
     find([1], function() {
-			// debugger;
 			eq(this.description, 'I should be accessible inside of the callback');
 		}, {description: 'I should be accessible inside of the callback'});
 	},
-	'It should not mutate the array taken as an agument': function() {
-		fail();
-	},
+	// 'It should not mutate the array taken as an agument': function() {
+	// 	fail();
+	// },
 	// 'It should not execute the callback on erased elements': function() {
 	// 	fail();
 	// },
@@ -123,18 +138,4 @@ tests({
 	}
 });
 
-	// 'It should stop searching when the first value of the array is returned': function() {},
-
-
-
-
-
 </script>
-
-<!-- <script>
-
-function findor(array, callback) {
-	// execute callback for each element of the array
-}
-
-</script> -->
