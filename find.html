@@ -14,9 +14,13 @@ function find(array, callback, optionalThis) {
 		throw new TypeError('.find is not a function')
 
 	} else {
-		var i = 0;
-		findCallback(array[i], i, array);
-	}
+		for(var i = 0; i < array.length; i++) {
+		var matchedBool = Boolean(findCallback(array[i], i, array));
+		if(matchedBool === true) {
+			return matchedBool;
+		}
+		}
+	}	
 }
 
 tests({
@@ -69,15 +73,25 @@ tests({
 			eq(this.description, 'I should be accessible inside of the callback');
 		}, {description: 'I should be accessible inside of the callback'});
 	},
-	'It should return the matching value': function() {
+	'It should stop executing the callback after a truethy value was found': function() {
 		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
+		var numberOfCallBacks = 0;
 		matchedValue = find(fruits, function isBananas(fruit) {
+			numberOfCallBacks++;
 			return fruit === 'bananas'
 		})
-		eq(matchedValue, 'bananas')
+		eq(numberOfCallBacks, 2);
 	},
-	'It should stop executing the callback after a truethy value was found': function() {
-		fail();
+	'It should return the matching value': function() {
+		// debugger;
+		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
+		var numberOfCallBacks = 0;
+		matchedValue = find(fruits, function isBananas(fruit) {
+			numberOfCallBacks++;
+			return fruit === 'bananas'
+		})
+		eq(numberOfCallBacks, 2);
+		eq(matchedValue, 'bananas');
 	},
 	'If condition is not met, it should return undefined': function() {
 		fail();
