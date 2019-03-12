@@ -14,40 +14,12 @@ function find(array, callback, optionalThis) {
 		throw new TypeError('.find is not a function')
 
 	} else {
-		var length = array.length;
-		// var condition = false
-
-		// if(Boolean(findCallback() === false)) {
-			for(var i = 0; i < length; i++) {
-				findCallback(array[i], i, array);
-			}
-		// } else {
-		// 	findCallback();
-		// 	}
-		}	
-		// while the condition is false and i < array.length, iterate within each array element
-		// if the value of the callback is true ==> quit the loops
+		var i = 0;
+		findCallback(array[i], i, array);
 	}
-	
+}
 
 tests({
-	// 'it should pass the ith element as the first argument to the callback': function() {
-  //   find([1], function(number) {
-  //     eq(number, 1); // number should be equal to 1
-  //   });
-  // },
-  // 'It should pass in the ith position as the second argument to the callback': function() {
-  //   find([1], function(number, index) {
-  //     eq(index, 0);
-  //   });
-  // },
-  // 'It should pass in the original array as the third argument to the callback': function() {
-  //   var testArray = [1, 2, 3];
-  //   find(testArray, function(number, index, originalArray) {
-  //     // console.log(originalArray);
-  //     eq(originalArray, testArray);
-  //   });
-  // },
 
 	'It should take an array as an argument for the callback': function() {
 		var testArray = [1, 2]
@@ -92,39 +64,28 @@ tests({
 			eq(testArray, array);
 		})
 	},
-	'It should return the matching value if the condition is true': function() {
-		var testArray = ['f', 'a', 'c', 3];
-		var numberOfCallBacks = 0;
-		
-		find(testArray,function(element) {
-			// debugger;
-			for(numberOfCallBacks; numberOfCallBacks < testArray.length; numberOfCallBacks++)
-			{	
-				return element === 3
-			}
-			eq(numberOfCallBacks, 4);
-			eq(element, 3);
-		})
-		
-	},
-	'If condition is not met, it should return undefined': function() {
-		var isThereAFour = find([1, 2, 3], function(element) {
-			return element === 4
-		})
-		eq(isThereAFour, undefined);
-	},
 	'It should accept an optional this object': function() {
-		// fail();
     find([1], function() {
 			eq(this.description, 'I should be accessible inside of the callback');
 		}, {description: 'I should be accessible inside of the callback'});
 	},
-	// 'It should not mutate the array taken as an agument': function() {
-	// 	fail();
-	// },
-	// 'It should not execute the callback on erased elements': function() {
-	// 	fail();
-	// },
+	'It should return the matching value': function() {
+		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
+		matchedValue = find(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		eq(matchedValue, 'bananas')
+	},
+	'It should stop executing the callback after a truethy value was found': function() {
+		fail();
+	},
+	'If condition is not met, it should return undefined': function() {
+		fail();
+		// var isThereAFour = find([1, 2, 3], function findFour(number) {
+		// 	return number === 4
+		// })
+		// eq(isThereAFour, undefined);
+	},
 	
 	'It should not execute callback on empty values': function() {
 		fail();
