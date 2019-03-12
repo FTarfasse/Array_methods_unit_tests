@@ -17,8 +17,7 @@ function find(array, callback, optionalThis) {
 		for(var i = 0; i < array.length; i++) {
 			if(findCallback(array[i], i, array) === true) {
 				return array[i];
-				break;
-			}
+			}	
 		}
 	}	
 }
