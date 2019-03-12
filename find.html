@@ -15,10 +15,10 @@ function find(array, callback, optionalThis) {
 
 	} else {
 		for(var i = 0; i < array.length; i++) {
-		var matchedBool = Boolean(findCallback(array[i], i, array));
-		if(matchedBool === true) {
-			return matchedBool;
-		}
+			if(findCallback(array[i], i, array) === true) {
+				return array[i];
+				break;
+			}
 		}
 	}	
 }
@@ -73,38 +73,34 @@ tests({
 			eq(this.description, 'I should be accessible inside of the callback');
 		}, {description: 'I should be accessible inside of the callback'});
 	},
-	'It should stop executing the callback after a truethy value was found': function() {
-		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
-		var numberOfCallBacks = 0;
-		matchedValue = find(fruits, function isBananas(fruit) {
-			numberOfCallBacks++;
-			return fruit === 'bananas'
-		})
-		eq(numberOfCallBacks, 2);
-	},
 	'It should return the matching value': function() {
 		// debugger;
 		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
-		var numberOfCallBacks = 0;
 		matchedValue = find(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		eq(matchedValue, 'bananas');
+	},
+	'If condition is not met, it should return undefined': function() {
+		var fruits = ['apples', 'kiwis', 'oranges'];
+		matchedValue = find(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		eq(matchedValue, undefined);
+	},
+	'It should stop executing the callback after a truethy value was found': function() {
+		// debugger;
+		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
+		var numberOfCallBacks = 0;
+		find(fruits, function isBananas(fruit) {
 			numberOfCallBacks++;
 			return fruit === 'bananas'
 		})
 		eq(numberOfCallBacks, 2);
-		eq(matchedValue, 'bananas');
 	},
-	'If condition is not met, it should return undefined': function() {
-		fail();
-		// var isThereAFour = find([1, 2, 3], function findFour(number) {
-		// 	return number === 4
-		// })
-		// eq(isThereAFour, undefined);
-	},
-	
 	'It should not execute callback on empty values': function() {
 		fail();
 	},
-
 	'Elements added after the call of find won\'t be exected by the callback': function() {
 		fail();
 	},
