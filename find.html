@@ -4,6 +4,7 @@
 // function find(array, callback, initialValue, optionalThis) {};
 function find(array, callback, optionalThis) {
 	var findCallback = callback;
+	var length = array.length;
 
   if(optionalThis) {
     findCallback = callback.bind(optionalThis);
@@ -14,12 +15,12 @@ function find(array, callback, optionalThis) {
 		throw new TypeError('.find is not a function')
 
 	} else {
-		for(var i = 0; i < array.length; i++) {
+		for(var i = 0; i < length; i++) {
 			if(findCallback(array[i], i, array) === true) {
 				return array[i];
-			}	
+			}
 		}
-	}	
+	}
 }
 
 tests({
@@ -40,7 +41,7 @@ tests({
     }
 		eq(isTypeError, true);
 	},
-	'While condition is false, it should execute the callback function once per element': function() {
+	'It should execute the callback function once per element while condition is false': function() {
 		var testArray = [1, 2, 3, 4];
 		var numberOfCallBacks = 0;
 		
@@ -61,7 +62,7 @@ tests({
       eq(index, 0);
     });
   },
-	'Callback function should have the array being processed as third argument': function() {
+	'It should have the array being processed as third argument of the callback function': function() {
 		var testArray = [1, 2, 3]
 		find(testArray, function(number, index, array) {
 			eq(testArray, array);
@@ -73,7 +74,6 @@ tests({
 		}, {description: 'I should be accessible inside of the callback'});
 	},
 	'It should return the matching value': function() {
-		// debugger;
 		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
 		matchedValue = find(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
@@ -97,14 +97,22 @@ tests({
 		})
 		eq(numberOfCallBacks, 2);
 	},
-	'It should not execute callback on empty values': function() {
-		fail();
+	'Elements added after the call of find won\'t be executed by the callback': function() {
+		// debugger;
+		var fruits = ['apples', 'kiwis', 'oranges'];
+		matchedValue = find(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		var moreBananas = fruits.push('bananas');
+		eq(matchedValue, undefined);
 	},
-	'Elements added after the call of find won\'t be exected by the callback': function() {
-		fail();
-	},
-	'Elements deleted after the call of find won\'t be executed by the callback': function() {
-		fail();
+	'Elements deleted after the call of find are still executed by the callback': function() {
+		var fruits = ['apples', 'kiwis', 'oranges', 'bananas'];
+		matchedValue = find(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		var lessBananas = fruits.pop('bananas');
+		eq(matchedValue, 'bananas');
 	}
 });
 
