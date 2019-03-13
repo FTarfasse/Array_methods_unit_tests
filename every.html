@@ -18,11 +18,19 @@ function every(array, callback, optionalThis) {
 	} else {
 
 		for(var i = 0; i < length; i++) {
+
 			var condition = everyCallback(array[i], i, array);
+
 			if(condition === true) {
-				everyCallback(array[i], i, array);
+
+				if(i < (length - 1)) {
+
+				} else if(i === (length - 1)) {
+					return true;
+				}
+
 			} else if(condition === false) {
-				break;
+				return false;
 			}
 		}
 	}
@@ -45,7 +53,6 @@ tests({
 		eq(genError, true)
 	},
 	'It should take the array[i] as first argument of the callback': function() {
-		// debugger;
 		every([1], function(num) {
 			eq(num, 1);
 		})
@@ -66,13 +73,6 @@ tests({
 			eq(this.description, 'Hi from the callback')
 		},{description: 'Hi from the callback'})
 	},
-	'It should execute the callback once for every element': function() {
-		var numberOfCallbacks = 0;
-		every([1, 2], function(){
-			numberOfCallbacks++;
-		})
-		eq(numberOfCallbacks, 2)
-	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
 		var testArray = [1, 2]
 		var length = testArray.length;
@@ -90,10 +90,24 @@ tests({
 		eq(numberOfCallbacks, 1);
 	},
 	'It should return false if falsy value is found': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		var result = every(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'kiwis';
+		});
+		eq(numberOfCallbacks, 1);
+		eq(result, false);
 	},
 	'It should return true if truethy value is found for every element': function() {
-		fail();
+		var testArray = [1, 2, 3];
+		var numberOfCallbacks = 0;
+		var result = every(testArray, function(num) {
+			numberOfCallbacks++;
+			return num < 4;
+		});
+		eq(result, true);
+		eq(numberOfCallbacks, 3);
 	},
 	'It should not execute callback on empty values': function() {
 		fail();
