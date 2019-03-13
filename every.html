@@ -1,12 +1,19 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function every(array, callback) {
+function every(array, callback, optionalThis) {
+
+	if(optionalThis) {
+		everyCallback = callback.bind(optionalThis)
+	} else {
+		everyCallback = callback
+	}
+
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.every is not a function')
 	} else {
 		var i = 0;
-		callback(array[i], i, array);
+		everyCallback(array[i], i, array);
 	}
 }
 
@@ -43,7 +50,9 @@ tests({
 		})
 	},
 	'It should accept an optional this object': function() {
-		fail();
+		every([], function() {
+			eq(this.description, 'Hi from the callback')
+		},{description: 'Hi from the callback'})
 	},
 	'It should execute the callback once for every element': function() {
 		fail();
