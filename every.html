@@ -1,12 +1,15 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function every() {
+function every(array) {
 }
 
 tests({
 	'It should take an array as argument': function() {
-		fail();
+		var array = ['yolo'];
+		every(array, function() {
+			eq(Array.isArray(array), true)
+		});
 	},
 	'It should throw a TyperError if argument is not an array': function() {
 		fail();
