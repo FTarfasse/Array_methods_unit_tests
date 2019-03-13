@@ -1,7 +1,10 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function some() {
+function some(array) {
+	if(Array.isArray(array) === false) {
+		throw new TypeError('.some is not a function')
+	}
 }
 
 tests({
@@ -14,7 +17,7 @@ tests({
 	'It should throw a TyperError if argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			every(fakeArray, function() {}) 
+			some(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
