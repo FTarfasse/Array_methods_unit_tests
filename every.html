@@ -12,10 +12,18 @@ function every(array, callback, optionalThis) {
 	}
 
 	if(Array.isArray(array) === false) {
+
 		throw new TypeError ('.every is not a function')
+
 	} else {
+
 		for(var i = 0; i < length; i++) {
-			everyCallback(array[i], i, array);
+			var condition = everyCallback(array[i], i, array);
+			if(condition === true) {
+				everyCallback(array[i], i, array);
+			} else if(condition === false) {
+				break;
+			}
 		}
 	}
 }
@@ -37,6 +45,7 @@ tests({
 		eq(genError, true)
 	},
 	'It should take the array[i] as first argument of the callback': function() {
+		// debugger;
 		every([1], function(num) {
 			eq(num, 1);
 		})
@@ -72,7 +81,13 @@ tests({
 		})
 	},
 	'It should stop executing the callback when falsy value is found': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		var result = every(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'kiwis';
+		});
+		eq(numberOfCallbacks, 1);
 	},
 	'It should return false if falsy value is found': function() {
 		fail();
