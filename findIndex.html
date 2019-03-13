@@ -14,9 +14,9 @@ function findIndex(array, callback, optionalThis) {
 		throw new TypeError ('.findIndex is not a function')
 
 	} else {
-		var i = 0;
-		findIndexCallback(array[i], i, array);
-
+		for(var i = 0; i < array.length; i++) {
+			findIndexCallback(array[i], i, array);
+		}
 	}
 }
 
@@ -61,7 +61,13 @@ tests({
 		}, {description: 'I\'m in the callback'})
   },
 	'It should execute the callback function once per element while condition is false': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		findIndex(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'potatoe';
+		})
+		eq(numberOfCallbacks, 3);
 	},
 	'It should return the index of the matching value': function() {
 		fail();
