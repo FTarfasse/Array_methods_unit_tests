@@ -15,7 +15,9 @@ function findIndex(array, callback, optionalThis) {
 
 	} else {
 		for(var i = 0; i < array.length; i++) {
-			findIndexCallback(array[i], i, array);
+			if(findIndexCallback(array[i], i, array) === false) {
+				findIndexCallback(array[i], i, array);
+			} 
 		}
 	}
 }
@@ -60,14 +62,16 @@ tests({
 			eq(this.description, 'I\'m in the callback');
 		}, {description: 'I\'m in the callback'})
   },
-	'It should execute the callback function once per element while condition is false': function() {
+	'It should execute the callback function once per element': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
 		findIndex(testArray, function(fruit) {
 			numberOfCallbacks++;
-			return fruit === 'potatoe';
 		})
 		eq(numberOfCallbacks, 3);
+	},
+	'It should execute the callback while the condition is false': function() {
+
 	},
 	'It should return the index of the matching value': function() {
 		fail();
