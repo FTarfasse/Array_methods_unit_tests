@@ -2,7 +2,16 @@
 <script>
 
 function findIndex(array, callback) {
-	callback(array);
+
+	if(Array.isArray(array) === false) {
+
+		throw new TypeError ('.findIndex is not a function')
+
+	} else {
+
+		callback(array);
+
+	}
 }
 
 tests({
@@ -14,7 +23,13 @@ tests({
 			eq(Array.isArray(testArray), true);
 	},
 	'It should throw an exception if the argument is not an array': function(){
-		fail();
+		var fakeArray = {};
+		try {
+			findIndex(fakeArray, function() {}) 
+			} catch(e) {
+			var genError = (e instanceof TypeError);
+		};
+		eq(genError, true)
 	},
 	'It should execute the callback function once per element while condition is false': function() {
 		fail();
