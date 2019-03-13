@@ -6,7 +6,7 @@ function every(array, callback) {
 		throw new TypeError ('.every is not a function')
 	} else {
 		var i = 0;
-		callback(array[i]);
+		callback(array[i], i);
 	}
 }
 
@@ -32,10 +32,14 @@ tests({
 		})
 	},
 	'It should take the element position as second argument of the callback': function() {
-		fail();
+		every([1], function(num, index) {
+			eq(index, 0);
+		})
 	},
 	'It should take the array being passed as third argument of the callback': function() {
-		fail();
+		every([1], function(num, index) {
+			eq(index, 0);
+		})
 	},
 	'It should accept an optional this object': function() {
 		fail();
