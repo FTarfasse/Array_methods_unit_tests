@@ -1,9 +1,29 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function some(array) {
+function some(array, callback, optionalThis) {
+
+	var length = array.length;
+
+	if(optionalThis) {
+		someCallback = callback.bind(optionalThis);
+	} else {
+		someCallback = callback;
+	}
+
 	if(Array.isArray(array) === false) {
+
 		throw new TypeError('.some is not a function')
+
+	} else {
+		for(var i = 0; i < length; i++) {
+			if(i in array === true) {
+				condition = someCallback(array[i], i, array);
+				if(condition) {
+					return true;
+				}
+			}
+		}
 	}
 }
 
@@ -24,41 +44,57 @@ tests({
 		eq(genError, true)
 	},
 	'It should take the array[i] as first argument of the callback': function() {
-		every([1], function(num) {
+		some([1], function(num) {
 			eq(num, 1);
 		})
 	},
 	'It should take the element position as second argument of the callback': function() {
-		every([1], function(num, index) {
+		some([1], function(num, index) {
 			eq(index, 0);
 		})
 	},
 	'It should take the array being passed as third argument of the callback': function() {
 		var testArray = [1];
-		every(testArray, function(num, index, array) {
+		some(testArray, function(num, index, array) {
 			eq(array, testArray);
 		})
 	},
 	'It should accept an optional this object': function() {
-		every([], function() {
+		some([], function() {
 			eq(this.description, 'Hi from the callback')
 		},{description: 'Hi from the callback'})
 	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
 		var testArray = [1, 2]
 		var length = testArray.length;
-		every(testArray, function(){
+		some(testArray, function(){
 			eq(length, 2);
 		})
 	},
 	'It should stop executing the callback when truethy value is found': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		var result = some(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'kiwis';
+		});
+		eq(numberOfCallbacks, 2);
 	},
 	'It should return true if truethy value is found for one element': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var result = some(testArray, function(fruit) {
+			return fruit === 'kiwis';
+		});
+		eq(result, true);
 	},
 	'It should not execute callback on empty values': function() {
-		fail();
+		var testArray = [,,,,,,,,,,,,,,,,,,,,,,,, 3];
+		var numberOfCallbacks = 0;
+		var result = some(testArray, function(num) {
+			numberOfCallbacks++;
+			return num < 4;
+		});
+		eq(numberOfCallbacks, 1);
 	}
 });
 
