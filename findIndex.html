@@ -1,7 +1,13 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function findIndex(array, callback) {
+function findIndex(array, callback, optionalThis) {
+
+	if(optionalThis) {
+		findIndexCallback = callback.bind(optionalThis);
+	} else {
+		findIndexCallback = callback;
+	}
 
 	if(Array.isArray(array) === false) {
 
@@ -9,7 +15,7 @@ function findIndex(array, callback) {
 
 	} else {
 		var i = 0;
-		callback(array[i], i, array);
+		findIndexCallback(array[i], i, array);
 
 	}
 }
@@ -50,8 +56,10 @@ tests({
 		});
 	},
 	'It should accept an optional this object': function() {
-		fail();
-	},
+		findIndex([1], function() {
+			eq(this.description, 'I\'m in the callback');
+		}, {description: 'I\'m in the callback'})
+  },
 	'It should execute the callback function once per element while condition is false': function() {
 		fail();
 	},
