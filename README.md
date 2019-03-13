@@ -1,19 +1,4 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>README.md</title>
-  <style>
-  li {
-    list-style-type: none;
-    }
-  </style>
-</head>
-  <body>
-    <p>
-      WatchAndCode exercices for testing chapter. Assignment is to write unit tests for Javascript array methods.
-    </p>
+WatchAndCode exercices for testing chapter. Assignment is to write unit tests for Javascript array methods.
     <ul>
       <li><input class="item" type="checkbox" disabled="" checked=""> Array.prototype.find </li>
       <li><input class="item"type="checkbox" disabled="" checked=""> Array.prototype.findIndex </li>
@@ -36,5 +21,6 @@
       <li><input class="item"type="checkbox" disabled="" > Array.prototype.sort </li>
       <li><input class="item"type="checkbox" disabled="" > Array.prototype.splice </li>
     </ul>
-  </body>
-</html>
+      <style>  li {
+    list-style-type: none;
+    }  </style>
