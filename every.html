@@ -2,6 +2,9 @@
 <script>
 
 function every(array) {
+	if(Array.isArray(array) === false) {
+		throw new TypeError ('.every is not a function')
+	}
 }
 
 tests({
@@ -12,6 +15,15 @@ tests({
 		});
 	},
 	'It should throw a TyperError if argument is not an array': function() {
+		var fakeArray = {};
+		try {
+			every(fakeArray, function() {}) 
+			} catch(e) {
+			var genError = (e instanceof TypeError);
+		};
+		eq(genError, true)
+	},
+	'It should execute a callback function as second argument of the function': function() {
 		fail();
 	},
 	'It should take the array[i] as first argument of the callback': function() {
