@@ -3,6 +3,8 @@
 
 function every(array, callback, optionalThis) {
 
+	var length = array.length;
+
 	if(optionalThis) {
 		everyCallback = callback.bind(optionalThis)
 	} else {
@@ -12,7 +14,7 @@ function every(array, callback, optionalThis) {
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.every is not a function')
 	} else {
-		for(var i = 0; i < array.length; i++) {
+		for(var i = 0; i < length; i++) {
 			everyCallback(array[i], i, array);
 		}
 	}
@@ -63,7 +65,11 @@ tests({
 		eq(numberOfCallbacks, 2)
 	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
-		fail();
+		var testArray = [1, 2]
+		var length = testArray.length;
+		every(testArray, function(){
+			eq(length, 2);
+		})
 	},
 	'It should stop executing the callback when falsy value is found': function() {
 		fail();
