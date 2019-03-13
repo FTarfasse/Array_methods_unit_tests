@@ -1,4 +1,4 @@
-- WatchAndCode exercices for testing chapter. Assignment is to write unit tests for Javascript array methods.
+WatchAndCode exercices for testing chapter. Assignment is to write unit tests for Javascript array methods.
 - [x] Array.prototype.find
 - [x] Array.prototype.findIndex
 - [x] Array.prototype.every
