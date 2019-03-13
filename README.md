@@ -23,6 +23,4 @@
   <li style="list-style-type: none;" class="item"><input type="checkbox" disabled="" > Array.prototype.copyWithin </li>
   <li style="list-style-type: none;" class="item"><input type="checkbox" disabled="" > Array.prototype.sort </li>
   <li style="list-style-type: none;" class="item"><input type="checkbox" disabled="" > Array.prototype.splice </li>
-  - [x] Vrai
-  - [ ] Faux
 </ul>
