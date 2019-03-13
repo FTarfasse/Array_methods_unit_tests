@@ -12,8 +12,9 @@ function every(array, callback, optionalThis) {
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.every is not a function')
 	} else {
-		var i = 0;
-		everyCallback(array[i], i, array);
+		for(var i = 0; i < array.length; i++) {
+			everyCallback(array[i], i, array);
+		}
 	}
 }
 
@@ -55,7 +56,11 @@ tests({
 		},{description: 'Hi from the callback'})
 	},
 	'It should execute the callback once for every element': function() {
-		fail();
+		var numberOfCallbacks = 0;
+		every([1, 2], function(){
+			numberOfCallbacks++;
+		})
+		eq(numberOfCallbacks, 2)
 	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
 		fail();
