@@ -14,11 +14,13 @@ function findIndex(array, callback, optionalThis) {
 		throw new TypeError ('.findIndex is not a function')
 
 	} else {
+
 		for(var i = 0; i < array.length; i++) {
-			if(findIndexCallback(array[i], i, array) === false) {
-				findIndexCallback(array[i], i, array);
-			} 
-		}
+			var condition = findIndexCallback(array[i], i, array);
+			if(condition === true) {
+				return i;
+			}
+		} return -1;
 	}
 }
 
@@ -71,13 +73,29 @@ tests({
 		eq(numberOfCallbacks, 3);
 	},
 	'It should execute the callback while the condition is false': function() {
-
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		findIndex(testArray, function(fruit) {
+			numberOfCallbacks++;
+		})
+		eq(numberOfCallbacks, 3);
 	},
 	'It should return the index of the matching value': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		var result = findIndex(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'kiwis';
+		})
+		eq(numberOfCallbacks, 2);
+		eq(result, 1);
 	},
 	'If condition is not met, it should return -1': function() {
-		fail();
+		var testArray = ['bananas', 'oranges'];
+		var result = findIndex(testArray, function(fruit) {
+			return fruit === 'kiwis';
+		})
+		eq(result, -1);
 	},
 	'If array is empty, it should return -1': function() {
 		fail();
