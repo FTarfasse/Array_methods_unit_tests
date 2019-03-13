@@ -18,19 +18,23 @@ function every(array, callback, optionalThis) {
 	} else {
 
 		for(var i = 0; i < length; i++) {
+			if(i in array === true) {
+				// determines if true or false
+				var condition = everyCallback(array[i], i, array);
 
-			var condition = everyCallback(array[i], i, array);
+				if(condition === true) {
 
-			if(condition === true) {
+					if(i < (length - 1)) {
+						// if loop reaches last element and every element true so far
+					} else if(i === (length - 1)) {
+						return true;
+					}
 
-				if(i < (length - 1)) {
-
-				} else if(i === (length - 1)) {
-					return true;
+				} else if(condition === false) {
+					return false;
 				}
-
-			} else if(condition === false) {
-				return false;
+			} else {
+				
 			}
 		}
 	}
@@ -110,7 +114,14 @@ tests({
 		eq(numberOfCallbacks, 3);
 	},
 	'It should not execute callback on empty values': function() {
-		fail();
+		var testArray = [,,,,,,,,,,,,,,,,,,,,,,,, 3];
+		var numberOfCallbacks = 0;
+		var result = every(testArray, function(num) {
+			numberOfCallbacks++;
+			return num < 4;
+		});
+		eq(result, true);
+		eq(numberOfCallbacks, 1);
 	},
 });
 
