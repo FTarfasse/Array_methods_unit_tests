@@ -9,7 +9,7 @@ function findIndex(array, callback) {
 
 	} else {
 		var i = 0;
-		callback(array[i], i);
+		callback(array[i], i, array);
 
 	}
 }
@@ -44,7 +44,10 @@ tests({
 		});
 	},
 	'It should have the array being processed as third argument of the callback function': function() {
-		fail();
+		var fruits = ['apples'];
+		findIndex(fruits, function findTheBananas(fruit, index, originalFruits) {
+			eq(originalFruits, fruits);
+		});
 	},
 	'It should accept an optional this object': function() {
 		fail();
