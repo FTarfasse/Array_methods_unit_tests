@@ -3,6 +3,8 @@
 
 function findIndex(array, callback, optionalThis) {
 
+	var length = array.length;
+
 	if(optionalThis) {
 		findIndexCallback = callback.bind(optionalThis);
 	} else {
@@ -15,7 +17,7 @@ function findIndex(array, callback, optionalThis) {
 
 	} else {
 
-		for(var i = 0; i < array.length; i++) {
+		for(var i = 0; i < length; i++) {
 			var condition = findIndexCallback(array[i], i, array);
 			if(condition === true) {
 				return i;
@@ -98,16 +100,37 @@ tests({
 		eq(result, -1);
 	},
 	'If array is empty, it should return -1': function() {
-		fail();
+		var emptyArray = [];
+		var result = findIndex(emptyArray, function() {
+		})
+		eq(result, -1);
 	},
 	'It should stop executing the callback after a truethy value was found': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		findIndex(testArray, function(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'kiwis';
+		})
+		eq(numberOfCallbacks, 2);
 	},
 	'Elements added after the call of find won\'t be executed by the callback': function() {
-		fail();
+		var fruits = ['apples', 'kiwis', 'oranges'];
+		var numberOfCallbacks = 0;
+		matchedValue = findIndex(fruits, function isBananas(fruit) {
+			numberOfCallbacks++;
+			return fruit === 'bananas'
+		})
+		fruits.push('bananas');
+		eq(numberOfCallbacks, 3);
 	},
 	'Elements deleted after the call of find are still executed by the callback': function() {
-		fail();
+		var fruits = ['apples', 'kiwis', 'oranges', 'bananas'];
+		matchedValue = findIndex(fruits, function isBananas(fruit) {
+			return fruit === 'bananas'
+		})
+		var lessBananas = fruits.pop('bananas');
+		eq(matchedValue, 3);
 	}
 });
 
