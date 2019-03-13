@@ -1,9 +1,8 @@
-<style> li {list-style-type: none;}  </style>
+
 <p>
   WatchAndCode exercices for testing chapter. Assignment is to write unit tests for Javascript array methods.
 </p>
 <ul>
-  <!-- <li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> Do not allowgt; 255 chars for lists</li> -->
   <li class="item"><input type="checkbox" disabled="" checked=""> Array.prototype.find </li>
   <li class="item"><input type="checkbox" disabled="" checked=""> Array.prototype.findIndex </li>
   <li class="item"><input type="checkbox" disabled="" checked=""> Array.prototype.every </li>
@@ -25,3 +24,4 @@
   <li class="item"><input type="checkbox" disabled="" > Array.prototype.sort </li>
   <li class="item"><input type="checkbox" disabled="" > Array.prototype.splice </li>
 </ul>
+<style> li {list-style-type: none;}  </style>
