@@ -9,7 +9,7 @@ function findIndex(array, callback) {
 
 	} else {
 		var i = 0;
-		callback(array);
+		callback(array[i], i);
 
 	}
 }
@@ -38,7 +38,10 @@ tests({
 		});
   },
   'It should pass in the ith position as the second argument to the callback': function() {
-		fail();
+		var fruits = ['apples'];
+		findIndex(fruits, function findTheBananas(fruit, index) {
+			eq(index, 0)
+		});
 	},
 	'It should have the array being processed as third argument of the callback function': function() {
 		fail();
