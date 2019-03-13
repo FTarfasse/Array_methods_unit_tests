@@ -8,7 +8,7 @@ function findIndex(array, callback) {
 		throw new TypeError ('.findIndex is not a function')
 
 	} else {
-
+		var i = 0;
 		callback(array);
 
 	}
@@ -31,11 +31,11 @@ tests({
 		};
 		eq(genError, true)
 	},
-	'It should execute the callback function once per element while condition is false': function() {
-		fail();
-	},
 	'it should pass the ith element as the first argument to the callback': function() {
-		fail();
+		var fruits = ['apples'];
+		findIndex(fruits, function findTheBananas(fruit) {
+			eq(fruit, 'apples')
+		});
   },
   'It should pass in the ith position as the second argument to the callback': function() {
 		fail();
@@ -44,6 +44,9 @@ tests({
 		fail();
 	},
 	'It should accept an optional this object': function() {
+		fail();
+	},
+	'It should execute the callback function once per element while condition is false': function() {
 		fail();
 	},
 	'It should return the index of the matching value': function() {
