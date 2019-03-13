@@ -1,14 +1,17 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-// function find(array, callback, initialValue, optionalThis) {};
-function findIndex() {
+function findIndex(array, callback) {
+	callback(array);
 }
 
 tests({
 
 	'It should take an array as an argument for the callback': function() {
-		fail();
+		var testArray = ['bananas', 'kiwis', 'oranges'];
+		findIndex(testArray, function() {
+		})
+			eq(Array.isArray(testArray), true);
 	},
 	'It should throw an exception if the argument is not an array': function(){
 		fail();
