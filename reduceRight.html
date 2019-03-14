@@ -1,21 +1,12 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function reduceRight(array, callback, initialValue) {
-	var accumulator = initialValue;
+function reduceRight(array, callback) {
 
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.reduceRight is not a function')
-	}
-	
-	if(arguments.length === 3) {
+	} else {
 		
-	}
-	if(Object.values(array) === 0) {
-		return
-	}
-		for(var i = array.length - 1; i !== -1; i--) {
-		callback(accumulator);
 	}
 }
 
@@ -44,9 +35,10 @@ tests({
 	},
 
 	'If initial value is supplied, the initial value will be used as accumulator': function() { 
-		reduceRight([1], function(initialValue) {
-			eq(initialValue, 0)
-		}, 0)
+		var testArray = [1];
+		reduceRight(testArray, function() {
+			eq(initialValue, 4)
+		}, 4)
 	},
 	'If initial value is supplied and array is not empty, accumulator sould equal to initialValue and currentValue to max[i] element': function() {
 		fail();
@@ -66,7 +58,7 @@ tests({
 	'If no initialValue and array has one element, it should return that element without calling callback': function() { 
 		fail();
 	},
-	
+
 	'It should throw an Error if array is empty and no initial value': function() { 
 		fail();
 	},
