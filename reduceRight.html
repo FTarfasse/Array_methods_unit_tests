@@ -6,8 +6,16 @@ function reduceRight(array, callback, initialValue) {
 
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.reduceRight is not a function')
-	} else {
-		callback();
+	}
+	
+	if(arguments.length === 3) {
+		
+	}
+	if(Object.values(array) === 0) {
+		return
+	}
+		for(var i = array.length - 1; i !== -1; i--) {
+		callback(accumulator);
 	}
 }
 
@@ -17,14 +25,6 @@ tests({
 		reduceRight(testArray, function(){})
 		eq(Array.isArray(testArray), true)
 	},
-	// 'It should take an initial value as third argument': function() { 
-	// 	debugger;
-	// 	var testArray = [1, 2, 3];
-	// 	var initialValue = 4;
-	// 	reduceRight(testArray, function() {}, initialValue)
-	// 	var thirdArg = reduceRight.arguments[2]
-	// 	eq(thirdArg === 'initialValue', true)
-	// },
 	'It should throw a TyperError if argument is not an array': function() { 
 		var fakeArray = {};
 		try {
@@ -33,27 +33,30 @@ tests({
 			eq(e instanceof Error, true)
 		}
 	},
+
 	'It should execute the callback on each element of the array': function() { 
-		fail();
+		var testArray = [1, 2, 3];
+		var numberOfcallbacks = 0;
+		reduceRight(testArray, function() {
+			numberOfcallbacks++;
+		})
+		eq(numberOfcallbacks, 3)
 	},
-	'It should take an accumulator as first argument of the callback': function() { 
-		fail();
-	},
-	'It should take the current value as second argument of the callback': function() { 
-		fail();
-	},
-	'It should take the element position as third argument of the callback': function() { 
-		fail();
-	},
-	'It should take the array being passed as fourth argument of the callback': function() { 
-		fail();
-	},
+
 	'If initial value is supplied, the initial value will be used as accumulator': function() { 
+		reduceRight([1], function(initialValue) {
+			eq(initialValue, 0)
+		}, 0)
+	},
+	'If initial value is supplied and array is not empty, accumulator sould equal to initialValue and currentValue to max[i] element': function() {
 		fail();
 	},
 	'If initial value is supplied and array is empty, it should return that element without calling callback': function() { 
-		fail();
+		var testArray = [];
+		var result = reduceRight(testArray, function() {}, 4)
+		eq(result, 4);
 	},
+
 	'If no initial value is supplied, the last element in the array will be used as accumulator': function() { 
 		fail();
 	},
@@ -63,6 +66,7 @@ tests({
 	'If no initialValue and array has one element, it should return that element without calling callback': function() { 
 		fail();
 	},
+	
 	'It should throw an Error if array is empty and no initial value': function() { 
 		fail();
 	},
