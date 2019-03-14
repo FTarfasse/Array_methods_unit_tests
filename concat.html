@@ -1,16 +1,25 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-// function find(array, callback, initialValue, optionalThis) {};
-function concat(array) {
-	if(Array.isArray(array) === false) {
+function concat(value) {
+
+	if(Array.isArray(arguments[0]) === false) {
+
 		throw new TypeError ('Unexpected token .')
+
+	} else {
+		var mergedArray = new Array;
+
+		for(var i = 0; i < arguments.length; i++) {
+
+			mergedArray.push(arguments[i])
+
+		} return mergedArray;
 	}
 }
 
 tests({
-	
-	'Throws TypeError if not an array': function() {
+	'Throws TypeError if first argument is not an array': function() {
 		var fakeArray = {};
 		try {
 			concat(fakeArray, function() {}) 
@@ -19,12 +28,19 @@ tests({
 		};
 		eq(genError, true)
 	},
-	'Returns a new array': function() {
-		fail();
+	'It should return a new array': function() {
+		// debugger;
+		var originalArray = ['a'];
+		var concatedArray = concat(originalArray);
+		eq(concatedArray !== originalArray, true)
 	},
-	'It should copy each argument array into a new array': function() {
-		fail();
-	}
+	'It should copy each argument array into the same array': function() {
+		// debugger;
+		var a = [1];
+		var b = [2];
+		var result = concat(a, b);
+		eq(result, [1, 2])
+	},
 });
 
 </script>
