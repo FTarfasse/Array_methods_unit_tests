@@ -2,12 +2,29 @@
 <script>
 
 // function find(array, callback, initialValue, optionalThis) {};
-function concat() {
-
+function concat(array) {
+	if(Array.isArray(array) === false) {
+		throw new TypeError ('Unexpected token .')
+	}
 }
 
 tests({
 	
+	'Throws TypeError if not an array': function() {
+		var fakeArray = {};
+		try {
+			concat(fakeArray, function() {}) 
+			} catch(e) {
+			var genError = (e instanceof TypeError);
+		};
+		eq(genError, true)
+	},
+	'Returns a new array': function() {
+		fail();
+	},
+	'It should copy each argument array into a new array': function() {
+		fail();
+	}
 });
 
 </script>
