@@ -1,21 +1,37 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function reduceRight() {
+function reduceRight(array, callback, initialValue) {
+	var accumulator = initialValue;
+
+	if(Array.isArray(array) === false) {
+		throw new TypeError ('.reduceRight is not a function')
+	} else {
+		callback();
+	}
 }
 
 tests({
 	'It should take an array as argument': function() { 
-		fail();
+		var testArray = [1, 2, 3];
+		reduceRight(testArray, function(){})
+		eq(Array.isArray(testArray), true)
 	},
-	'It should take a callback as second argument': function() { 
-		fail();
-	},
-	'It should take an initial value as third argument': function() { 
-		fail();
-	},
+	// 'It should take an initial value as third argument': function() { 
+	// 	debugger;
+	// 	var testArray = [1, 2, 3];
+	// 	var initialValue = 4;
+	// 	reduceRight(testArray, function() {}, initialValue)
+	// 	var thirdArg = reduceRight.arguments[2]
+	// 	eq(thirdArg === 'initialValue', true)
+	// },
 	'It should throw a TyperError if argument is not an array': function() { 
-		fail();
+		var fakeArray = {};
+		try {
+			reduceRight(fakeArray, function(){})
+		} catch(e) {
+			eq(e instanceof Error, true)
+		}
 	},
 	'It should execute the callback on each element of the array': function() { 
 		fail();
