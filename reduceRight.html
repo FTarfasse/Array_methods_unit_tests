@@ -8,10 +8,21 @@
 function reduceRight(array, callback, accumulator) {
 
 	if(Array.isArray(array) === false) {
+
 		throw new TypeError ('.reduceRight is not a function')
-	} else {
-		var i = 0;
-		callback(accumulator, array[i], i, array)
+
+	}
+
+	if(arguments.length === 3) {
+
+		// if accumulator and empty array
+		if(Object.keys(array).length === 0) {
+			return accumulator;
+		} else {
+			var i = 0;
+			callback(accumulator, array[i], i, array)
+		}
+
 	}
 }
 
@@ -53,8 +64,10 @@ tests({
 			eq(testArray, array)
 		})
 	},
-	'If accumulator is supplied and array is empty, it should return the accumulator argument without calling callback': function() { 
-		fail();
+	'If accumulator is supplied and array is empty, it should return the accumulator argument without calling callback': function() {
+		var emptArray = [];
+		var result = reduceRight(emptArray, function() {}, 0);
+		eq(result, 0)
 	},
 	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() { 
 		fail();
