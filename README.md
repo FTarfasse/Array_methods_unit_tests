@@ -3,7 +3,7 @@ WatchAndCode exercices for testing chapter. Assignment is to write unit tests fo
 - [x] Array.prototype.findIndex
 - [x] Array.prototype.every
 - [x] Array.prototype.some
-- [ ] Array.prototype.reduceRight
+- [x] Array.prototype.reduceRight
 - [ ] Array.prototype.concat
 - [ ] Array.prototype.indexOf
 - [ ] Array.prototype.lastIndexOf
