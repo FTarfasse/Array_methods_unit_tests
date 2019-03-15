@@ -1,12 +1,18 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function reduceRight(array, callback) {
+// reduceRight([0, 1, 2, 3, 4], function(accumulator, currentValue, index, array) {
+//   return accumulator + currentValue;
+// }, 10);
+
+function reduceRight(array, callback, accumulator) {
 
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.reduceRight is not a function')
 	} else {
-		
+		for(var i = 0; i < array.length; i++) {
+			callback(accumulator, array[i])
+		}
 	}
 }
 
@@ -24,7 +30,6 @@ tests({
 			eq(e instanceof Error, true)
 		}
 	},
-
 	'It should execute the callback on each element of the array': function() { 
 		var testArray = [1, 2, 3];
 		var numberOfcallbacks = 0;
@@ -33,12 +38,26 @@ tests({
 		})
 		eq(numberOfcallbacks, 3)
 	},
-
-	'If initial value is supplied, the initial value will be used as accumulator': function() { 
+	'It should have an accumulator as first argument of the callback': function() {
+		var testArray = [1, 2, 3];
+		reduceRight(testArray, function(accumulator) {
+			eq(accumulator, 10)
+		}, 10)
+	},
+	'It should have the current value as second argument of the callback': function() {
 		var testArray = [1];
-		reduceRight(testArray, function() {
-			eq(initialValue, 4)
-		}, 4)
+		reduceRight(testArray, function(accumulator, currentValue) {
+			eq(currentValue, 1)
+		}, 10)
+	},
+	'It should have the element position as third argument of the callback': function() {
+		fail();
+	},
+	'It should have the orginal array as fourth argument of the callback': function() {
+		fail();
+	},
+	'If initial value is supplied, the initial value will be used as accumulator': function() { 
+		fail();
 	},
 	'If initial value is supplied and array is not empty, accumulator sould equal to initialValue and currentValue to max[i] element': function() {
 		fail();
