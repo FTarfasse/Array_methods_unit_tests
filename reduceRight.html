@@ -7,7 +7,7 @@
 
 function reduceRight(array, callback, accumulator) {
 
-	var startingIndex = 0;
+	var startingIndex = array.length - 1;
 
 	if(Array.isArray(array) === false) {
 
@@ -27,7 +27,7 @@ function reduceRight(array, callback, accumulator) {
 			
 			// while(startingIndex in array === false && startingIndex < array.length) {
 			// 	startingIndex++;}
-			for(var i = startingIndex; i < array.length; i++) {
+			for(var i = startingIndex; i >= 0; i--) {
 				if(i in array) {
 					resultSoFar = callback(resultSoFar, array[i], i, array)
 				}
@@ -50,10 +50,10 @@ function reduceRight(array, callback, accumulator) {
 			// no accumulator and array  > 1
   	  } else if(Object.keys(array).length > 1) {
 				// skips holes when starting
-				while(startingIndex in array === false && startingIndex < array.length) {
-					startingIndex++;}
+				while(startingIndex in array === false && startingIndex >= 0) {
+					startingIndex--;}
 				var resultSoFar = array[startingIndex];
-				for(var i = startingIndex + 1; i < array.length; i++) {
+				for(var i = startingIndex - 1; i >= 0; i--) {
 					if(i in array) {
 						resultSoFar = callback(resultSoFar, array[i], i, array)
 					}
@@ -76,13 +76,6 @@ tests({
 			eq(e instanceof Error, true)
 		}
 	},
-	// 'It should have an accumulator as first argument of the callback': function() {
-	// 	// debugger;
-	// 	var testArray = [1, 2, 3];
-	// 	reduceRight(testArray, function(accumulator) {
-	// 		eq(accumulator, 10)
-	// 	}, 10)
-	// },
 	'It should have the current value as second argument of the callback': function() {
 		var testArray = [1];
 		reduceRight(testArray, function(accumulator, currentValue) {
@@ -157,10 +150,14 @@ tests({
 		eq(sum, 6);
 	},
 	'It should execute the callback from the last element of the array': function() { 
-		fail();
+		var stringArray = ['a', 'b'];
+		var result = reduceRight(stringArray, function(a, b) { return a + b})
+		eq(result, 'ba')
 	},
 	'If accumulator is supplied, callback should start from the last element of the array': function() { 
-		fail();
+		var stringArray = ['a', 'b'];
+		var result = reduceRight(stringArray, function(a, b) { return a + b}, 'c')
+		eq(result, 'cba')
 	}
 });
 
