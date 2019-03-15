@@ -1,22 +1,23 @@
 <script src="../simpleTest.js"></script>
 <script>
 
+'use strict'
+
 function concat(value) {
 
 	if(Array.isArray(arguments[0]) === false) {
 
 		throw new TypeError ('Unexpected token .')
 
-	} else {
-		var mergedArray = new Array;
-
-		for(var i = 0; i < arguments.length; i++) {
-
-			mergedArray.push(arguments[i])
-
-		} return mergedArray;
 	}
-}
+
+	var mergedArray = new Array;
+	
+	for(var i = 0; i < arguments.length; i++) {
+		var element = arguments[i];
+		var result = mergedArray.push(element);
+	} return result;
+};
 
 tests({
 	'Throws TypeError if first argument is not an array': function() {
@@ -29,13 +30,17 @@ tests({
 		eq(genError, true)
 	},
 	'It should return a new array': function() {
-		// debugger;
 		var originalArray = ['a'];
 		var concatedArray = concat(originalArray);
 		eq(concatedArray !== originalArray, true)
 	},
-	'It should copy each argument array into the same array': function() {
-		// debugger;
+	'It should copy the first array argument': function() {
+		var originalArray = ['a'];
+		var concatedArray = concat(originalArray);
+		eq(concatedArray instanceof Array === true, true)
+		eq(concatedArray[0], 'a')
+	},
+	'It should copy each argument into a unique array': function() {
 		var a = [1];
 		var b = [2];
 		var result = concat(a, b);
