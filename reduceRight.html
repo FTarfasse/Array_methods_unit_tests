@@ -11,7 +11,7 @@ function reduceRight(array, callback, accumulator) {
 		throw new TypeError ('.reduceRight is not a function')
 	} else {
 		for(var i = 0; i < array.length; i++) {
-			callback(accumulator, array[i])
+			callback(accumulator, array[i], i, array)
 		}
 	}
 }
@@ -51,10 +51,16 @@ tests({
 		}, 10)
 	},
 	'It should have the element position as third argument of the callback': function() {
-		fail();
+		var testArray = [1];
+		reduceRight(testArray, function(accumulator, currentValue, index) {
+			eq(index, 0)
+		}, 10)
 	},
 	'It should have the orginal array as fourth argument of the callback': function() {
-		fail();
+		var testArray = [1];
+		reduceRight(testArray, function(accumulator, currentValue, index, array) {
+			eq(testArray, array)
+		}, 10)
 	},
 	'If initial value is supplied, the initial value will be used as accumulator': function() { 
 		fail();
