@@ -12,7 +12,7 @@ function reduceRight(array, callback, accumulator) {
 		throw new TypeError ('.reduceRight is not a function')
 
 	}
-	// accumulator is present
+	// ACCUMULATOR IS PRESENT
 	if(arguments.length === 3) {
 
 		// if accumulator and empty array
@@ -20,9 +20,11 @@ function reduceRight(array, callback, accumulator) {
 			return accumulator;
 		} else {
 			var i = 0;
-			callback(accumulator, array[i], i, array)
+			while(i in array === false && i < array.length) {
+				i++;}
+				callback(accumulator, array[i], i, array)
 		}
-	// no accumulator
+	// NO ACCUMULATOR
 	} else {
 		// no accumulator and empty array
 		if(Object.keys(array).length === 0) {
@@ -38,6 +40,8 @@ function reduceRight(array, callback, accumulator) {
     } else if(Object.keys(array).length > 1) {
 			lastIndex = array.length - 1;
 			accumulator = array[lastIndex];
+			while(i in array === false && i < array.length) {
+				i++;}
 			callback(accumulator, array[i], i, array)
 		}
 	}
@@ -105,8 +109,14 @@ tests({
 			eq(e instanceof Error, true)
 		}
 	},
-	'It should skip holes': function() { 
-		fail();
+	'It should skip holes': function() {
+		// debugger;
+		var numberOfCallbacks = 0;
+		var holyArray = [,,1,,2,,,,];
+		reduceRight(holyArray, function() {
+			numberOfCallbacks++;
+		})
+		eq(numberOfCallbacks, 1)
 	},
 	'It should execute the callback on each element of the array': function() { 
 		// var testArray = [1, 2, 3];
