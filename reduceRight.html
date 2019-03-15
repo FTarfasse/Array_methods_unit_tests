@@ -12,7 +12,7 @@ function reduceRight(array, callback, accumulator) {
 		throw new TypeError ('.reduceRight is not a function')
 
 	}
-
+	// accumulator is present
 	if(arguments.length === 3) {
 
 		// if accumulator and empty array
@@ -23,6 +23,13 @@ function reduceRight(array, callback, accumulator) {
 			callback(accumulator, array[i], i, array)
 		}
 
+	} else {
+		// no accumulator
+		if(Object.keys(array).length === 1) {
+			var onlyIndex = Object.keys(array)[0];
+			var onlyElement = array[onlyIndex];
+			return onlyElement;
+    }
 	}
 }
 
@@ -69,10 +76,14 @@ tests({
 		var result = reduceRight(emptArray, function() {}, 0);
 		eq(result, 0)
 	},
-	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() { 
-		fail();
-	},
 	'If no accumulator argument and array has one element, it should return that element without executing callback': function() { 
+		var yolo = ['BAM'];
+		var result = reduceRight(yolo, function() {})
+		eq(result, ['BAM'])
+	},
+	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() { 
+		// var yummy = ['there', 'is', 'a', 'filled', 'array', 'here','man']
+		// reduceRight(yummy, function(){})
 		fail();
 	},
 	'It should throw an Error if array is empty and no accumulator argument': function() { 
