@@ -22,17 +22,20 @@ function reduceRight(array, callback, accumulator) {
 			var i = 0;
 			callback(accumulator, array[i], i, array)
 		}
-
+	// no accumulator
 	} else {
+		// no accumulator and empty array
+		if(Object.keys(array).length === 0) {
+			throw new TypeError ('Reduce of empty array with no initial value')
+		}
 		// no accumulator and one array long
-		if(Object.keys(array).length === 1) {
-
+		else if(Object.keys(array).length === 1) {
 			var onlyIndex = Object.keys(array)[0];
 			var onlyElement = array[onlyIndex];
 			return onlyElement;
+
 		// no accumulator and array  > 1
     } else if(Object.keys(array).length > 1) {
-
 			lastIndex = array.length - 1;
 			accumulator = array[lastIndex];
 			callback(accumulator, array[i], i, array)
@@ -95,7 +98,12 @@ tests({
 		})
 	},
 	'It should throw an Error if array is empty and no accumulator argument': function() { 
-		fail();
+		var emptyArray = []
+		try {
+			reduceRight(emptyArray, function(){})
+		} catch(e) {
+			eq(e instanceof Error, true)
+		}
 	},
 	'It should skip holes': function() { 
 		fail();
