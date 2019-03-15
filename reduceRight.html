@@ -10,9 +10,8 @@ function reduceRight(array, callback, accumulator) {
 	if(Array.isArray(array) === false) {
 		throw new TypeError ('.reduceRight is not a function')
 	} else {
-		for(var i = 0; i < array.length; i++) {
-			callback(accumulator, array[i], i, array)
-		}
+		var i = 0;
+		callback(accumulator, array[i], i, array)
 	}
 }
 
@@ -29,14 +28,6 @@ tests({
 		} catch(e) {
 			eq(e instanceof Error, true)
 		}
-	},
-	'It should execute the callback on each element of the array': function() { 
-		var testArray = [1, 2, 3];
-		var numberOfcallbacks = 0;
-		reduceRight(testArray, function() {
-			numberOfcallbacks++;
-		})
-		eq(numberOfcallbacks, 3)
 	},
 	'It should have an accumulator as first argument of the callback': function() {
 		var testArray = [1, 2, 3];
@@ -60,15 +51,12 @@ tests({
 		var testArray = [1];
 		reduceRight(testArray, function(accumulator, currentValue, index, array) {
 			eq(testArray, array)
-		}, 10)
-	},
-	'If accumulator is supplied, the initial value will be the last element of the array': function() { 
-		fail();
+		})
 	},
 	'If accumulator is supplied and array is empty, it should return the accumulator argument without calling callback': function() { 
 		fail();
 	},
-	'If no accumulator argument is supplied and array is not empty, the last element in the array will be used as accumulator': function() { 
+	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() { 
 		fail();
 	},
 	'If no accumulator argument and array has one element, it should return that element without executing callback': function() { 
@@ -78,6 +66,18 @@ tests({
 		fail();
 	},
 	'It should skip holes': function() { 
+		fail();
+	},
+	'It should execute the callback on each element of the array': function() { 
+		// var testArray = [1, 2, 3];
+		// var numberOfcallbacks = 0;
+		// reduceRight(testArray, function() {
+		// 	numberOfcallbacks++;
+		// })
+		// eq(numberOfcallbacks, 3)
+		fail();
+	},
+	'If accumulator is supplied, callback should start from the last element of the array': function() { 
 		fail();
 	},
 	'It should reduce': function() { 
