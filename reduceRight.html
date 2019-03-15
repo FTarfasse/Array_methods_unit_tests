@@ -24,12 +24,19 @@ function reduceRight(array, callback, accumulator) {
 		}
 
 	} else {
-		// no accumulator
+		// no accumulator and one array long
 		if(Object.keys(array).length === 1) {
+
 			var onlyIndex = Object.keys(array)[0];
 			var onlyElement = array[onlyIndex];
 			return onlyElement;
-    }
+		// no accumulator and array  > 1
+    } else if(Object.keys(array).length > 1) {
+
+			lastIndex = array.length - 1;
+			accumulator = array[lastIndex];
+			callback(accumulator, array[i], i, array)
+		}
 	}
 }
 
@@ -82,9 +89,10 @@ tests({
 		eq(result, ['BAM'])
 	},
 	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() { 
-		// var yummy = ['there', 'is', 'a', 'filled', 'array', 'here','man']
-		// reduceRight(yummy, function(){})
-		fail();
+		var yummy = ['there', 'is', 'a', 'filled', 'array', 'here','man']
+		reduceRight(yummy, function(el){
+			eq(el, 'man')
+		})
 	},
 	'It should throw an Error if array is empty and no accumulator argument': function() { 
 		fail();
