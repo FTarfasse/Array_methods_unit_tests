@@ -62,29 +62,19 @@ tests({
 			eq(testArray, array)
 		}, 10)
 	},
-	'If initial value is supplied, the initial value will be used as accumulator': function() { 
+	'If accumulator is supplied, the initial value will be the last element of the array': function() { 
 		fail();
 	},
-	'If initial value is supplied and array is not empty, accumulator sould equal to initialValue and currentValue to max[i] element': function() {
+	'If accumulator is supplied and array is empty, it should return the accumulator argument without calling callback': function() { 
 		fail();
 	},
-	'If initial value is supplied and array is empty, it should return that element without calling callback': function() { 
-		var testArray = [];
-		var result = reduceRight(testArray, function() {}, 4)
-		eq(result, 4);
-	},
-
-	'If no initial value is supplied, the last element in the array will be used as accumulator': function() { 
+	'If no accumulator argument is supplied and array is not empty, the last element in the array will be used as accumulator': function() { 
 		fail();
 	},
-	'If no initial value is supplied, the current value will be the one at index[lenght - 1]': function() { 
+	'If no accumulator argument and array has one element, it should return that element without executing callback': function() { 
 		fail();
 	},
-	'If no initialValue and array has one element, it should return that element without calling callback': function() { 
-		fail();
-	},
-
-	'It should throw an Error if array is empty and no initial value': function() { 
+	'It should throw an Error if array is empty and no accumulator argument': function() { 
 		fail();
 	},
 	'It should skip holes': function() { 
