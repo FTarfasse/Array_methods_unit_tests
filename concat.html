@@ -4,7 +4,7 @@
 'use strict'
 
 function concat(value) {
-
+// check if first argument is an array
 	if(Array.isArray(arguments[0]) === false) {
 
 		throw new TypeError ('Unexpected token .')
@@ -12,11 +12,11 @@ function concat(value) {
 	}
 
 	var mergedArray = new Array;
+	var i = 0;
+	var lol = arguments.values();
+	mergedArray = arguments[i];
+	return mergedArray;
 	
-	for(var i = 0; i < arguments.length; i++) {
-		var element = arguments[i];
-		var result = mergedArray.push(element);
-	} return result;
 };
 
 tests({
@@ -30,17 +30,21 @@ tests({
 		eq(genError, true)
 	},
 	'It should return a new array': function() {
+		// debugger;
 		var originalArray = ['a'];
 		var concatedArray = concat(originalArray);
-		eq(concatedArray !== originalArray, true)
+		// eq(concatedArray === originalArray, false)
+		eq(originalArray, concatedArray, false)
 	},
 	'It should copy the first array argument': function() {
+		// debugger;
 		var originalArray = ['a'];
 		var concatedArray = concat(originalArray);
 		eq(concatedArray instanceof Array === true, true)
 		eq(concatedArray[0], 'a')
 	},
 	'It should copy each argument into a unique array': function() {
+		debugger;
 		var a = [1];
 		var b = [2];
 		var result = concat(a, b);
