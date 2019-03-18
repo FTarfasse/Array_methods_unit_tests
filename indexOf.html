@@ -12,7 +12,8 @@ function indexOf(item, searchedElement, startingIndex) {
     i = startingIndex;
   };
 
-  if((Array.isArray(item) === false) || (typeof(item) === 'string')) {
+  // if(Array.isArray(item) === false) {
+  if(!(typeof(item) === 'string' || Array.isArray(item) === true)) {
 
     throw new TypeError ('Invalid or unexpected token')
 
@@ -34,9 +35,6 @@ tests({
     }
     eq(err, true)
   },
-  // 'It should accept a string as argument': function() {
-  //   indexOf('aaaaa')
-  // },
   'It should return the index of the first element set as argument': function() {
     // debugger;
     var fruits = ['fraises', 'pêches'];
@@ -57,7 +55,11 @@ tests({
     var fruits = ['fraises', 'pêches', 'oranges', 'mangues', 'cerises'];
     var result = indexOf(fruits, 'peches', 2);
     eq(result, -1)
-  }
+  },
+  'It should accept a string as argument': function() {
+    var result = indexOf('aaaafa', 'f');
+    eq(result, 4)
+  },
 });
 
 </script>
