@@ -1,22 +1,49 @@
-// TO DO : get successes in green
-// TO DO : make sure only one error per failure goes to the console
-// TO DO : get failures in red
-// TO DO : show stack traces for failures
-
-// TO DO : only show stack traces if you click expand
-// TO DO : output summary statistics to the DOM.
 
 var tinyTestHelper = {
   renderStats: function(tests, failures) {
+
+    var url = window.location.href;
+    var urlArrayed = url.split('/');
+    var maxIndex = urlArrayed.length - 1;
+
     var numberOfTests = Object.keys(tests).length;
     var successes = numberOfTests - failures;
 
+    var titleString = urlArrayed[maxIndex];
     var summaryString = 'Ran ' + numberOfTests + ' tests: '
-                        + successes + ' successes, '
-                        + failures + ' failures'
+                        + successes + (successes > 1 ? ' successes, ' : ' success, ')
+                        + failures + (failures > 1 ? ' failures' : ' failure')
+    var title = document.createElement('h2')
     var summaryElement = document.createElement('h1');
+    
+    title.textContent = titleString;
     summaryElement.textContent = summaryString;
+    document.body.appendChild(title);
     document.body.appendChild(summaryElement);
+
+    // creating a image with a meme if only successes
+    if(numberOfTests === successes) {
+        var yodaImg = 'http://www.quickmeme.com/img/9c/9c973c71365035fcae728a65b287acb8feb6b9cd07e41f6cb86c046c72c8db2c.jpg';
+        var babyImg = 'https://memegenerator.net/img/instances/61102706/smell-that-thats-the-smell-of-victory.jpg';
+        var rockyImg = 'https://memegenerator.net/img/instances/59217574/thats-how-winning-is-done.jpg';
+        var squirrelImg = 'https://media.makeameme.org/created/victory-at-last.jpg';
+
+        var randomNumber = Math.trunc(Math.random() * 100);
+        
+        if(randomNumber > 75) {
+            totalVictoryMemeUrl = yodaImg;
+        } else if(randomNumber >50 && randomNumber <= 75) {
+            totalVictoryMemeUrl = babyImg;
+        } else if (randomNumber > 25 && randomNumber <= 50) {
+            totalVictoryMemeUrl = rockyImg;
+        } else {
+            totalVictoryMemeUrl = squirrelImg;
+        };
+
+        var victoryImage = document.createElement('img');
+        victoryImage.setAttribute('src', totalVictoryMemeUrl);
+        document.body.appendChild(victoryImage);
+    }
   }
 }
 
