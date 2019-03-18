@@ -10,6 +10,8 @@ function indexOf(item, searchedElement, startingIndex) {
 
   if(startingIndex) {
     i = startingIndex;
+  } else {
+    startingIndex = 0;
   };
 
   // if(Array.isArray(item) === false) {
@@ -17,7 +19,7 @@ function indexOf(item, searchedElement, startingIndex) {
 
     throw new TypeError ('Invalid or unexpected token')
 
-  } for(var i = 0; i < item.length; i++) {
+  } for(var i = startingIndex; i < item.length; i++) {
 
     if(item[i] === searchedElement) {
       return i;
