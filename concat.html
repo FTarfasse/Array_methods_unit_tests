@@ -12,9 +12,9 @@ function concat(value) {
 	}
 
 	var mergedArray = new Array;
-	// for(var i = 0; i < arguments.length; i++) {
-	// 	mergedArray.push(arguments[i]);
-	// }
+	for(var i = 0; i < arguments.length; i++) {
+		mergedArray.push(arguments[i]);
+	}
 	return mergedArray;
 	
 };
@@ -30,11 +30,10 @@ tests({
 		eq(genError, true)
 	},
 	'It should return a new array': function() {
-		// debugger;
-		var originalArray = ['a'];
-		var concatedArray = concat(originalArray);
+		var originalArray = ['oldisgold'];
+		var result = concat(originalArray);
 		// eq(concatedArray === originalArray, false)
-		eq(originalArray, concatedArray, false)
+		eq(originalArray === result, false)
 	},
 	'It should copy the first array argument': function() {
 		// debugger;
