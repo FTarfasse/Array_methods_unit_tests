@@ -1,0 +1,103 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+// arr.includes(valueToFind[, fromIndex])
+
+function includes(array, searchedElement, startingIndex) {
+
+  if(!(Array.isArray(array) === true || typeof(array) === 'string')) {
+    throw new TypeError ('Unexpected token')
+  }
+
+  if(startingIndex) {
+
+    var computedIndex = array.length + (startingIndex);
+
+    if(startingIndex >= array.length) {
+      return false;
+    }
+    // if(computedIndex > (-1 * array.length) && computedIndex < 0) {
+    if(computedIndex < (-1 * array.length)) {
+      var i = startingIndex;
+      
+    } else {
+      return false;
+    }
+  } else {
+    var i = 0;
+  }
+
+  for(i; i < array.length; i++) {
+    if(searchedElement === array[i]) {
+      return true;
+    }
+  } return false;
+}
+
+tests({
+  'It should throw an error if the first argument is not an object of array type': function() {
+    var err = false;
+    var fakeArray = {name: 'Jacques'};
+    try {
+      includes(fakeArray);
+    } catch(e) {
+      err = (e instanceof TypeError)
+    }
+    eq(err, true)
+  },
+  'It should accept a string as argument': function() {
+    var err = false;
+    var str = 'Jacques';
+    try {
+      includes(str);
+    } catch(e) {
+      err = (e instanceof TypeError)
+    }
+    eq(err, false)
+  },
+  'It should check if the searched element is present in the array': function() {
+    var str = ['thing'];
+    var result = includes(str, 'thing')
+    eq(result, true)
+  },
+  'It should return true if the searched element is found': function() {
+    var str = ['thing'];
+    var result = includes(str, 'thing')
+    eq(result, true)
+  },
+  'It should return false if the searched element is NOT found': function() {
+    var str = ['thing'];
+    var result = includes(str, 'potatoe !')
+    eq(result, false)
+  },
+  'It should start from the given index if any': function() {
+    var str = ['thing', 'codec', 'cot', 'random'];
+    var result = includes(str, 'codec', 2)
+    eq(result, false)
+  },
+  'If fromIndex is greater than or equal to the length of the array, false is returned. The array will not be searched.': function() {
+    var str = ['thing', 'codec', 'cot', 'random'];
+    var result = includes(str, 'codec', 4)
+    eq(result, false)
+  },
+  'If computedIndex(array.length + (findIndex)) <= (-1 * array.length) then the entire array is searched, else return false': function() {
+    debugger;
+    var str = ['thing', 'codec', 'cot', 'random'];
+    var result = includes(str, 'codec', -2)
+    eq(result, false)
+  }
+});
+
+</script>

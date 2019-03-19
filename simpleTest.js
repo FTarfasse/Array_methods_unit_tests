@@ -21,7 +21,7 @@ var tinyTestHelper = {
     document.body.appendChild(title);
     document.body.appendChild(summaryElement);
 
-    // creating a image with a meme if only successes
+    // creating an image with a meme if only successes
     if(numberOfTests === successes) {
         var yodaImg = 'http://www.quickmeme.com/img/9c/9c973c71365035fcae728a65b287acb8feb6b9cd07e41f6cb86c046c72c8db2c.jpg';
         var babyImg = 'https://memegenerator.net/img/instances/61102706/smell-that-thats-the-smell-of-victory.jpg';

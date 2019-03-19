@@ -12,9 +12,9 @@ function concat(value) {
 	}
 
 	var mergedArray = new Array;
-	var i = 0;
-	var lol = arguments.values();
-	mergedArray = arguments[i];
+	// for(var i = 0; i < arguments.length; i++) {
+	// 	mergedArray.push(arguments[i]);
+	// }
 	return mergedArray;
 	
 };
@@ -44,7 +44,7 @@ tests({
 		eq(concatedArray[0], 'a')
 	},
 	'It should copy each argument into a unique array': function() {
-		debugger;
+		// debugger;
 		var a = [1];
 		var b = [2];
 		var result = concat(a, b);
