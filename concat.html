@@ -1,3 +1,13 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
 <script src="../simpleTest.js"></script>
 <script>
 
@@ -12,8 +22,25 @@ function concat(value) {
 	}
 
 	var mergedArray = new Array;
+	var futureI = 0
+
 	for(var i = 0; i < arguments.length; i++) {
-		mergedArray.push(arguments[i]);
+
+
+		if(Array.isArray(arguments[i]) === true) {
+
+			var j = arguments[i].length;
+			
+			for(var u = 0; u < j; u++) {
+				mergedArray[futureI] = arguments[i][u];
+				futureI++;
+			}
+
+		} else {
+			mergedArray[futureI] = arguments[i];
+			futureI++;
+		}
+		
 	}
 	return mergedArray;
 	
@@ -44,11 +71,55 @@ tests({
 	},
 	'It should copy each argument into a unique array': function() {
 		// debugger;
-		var a = [1];
-		var b = [2];
-		var result = concat(a, b);
-		eq(result, [1, 2])
+		var a = [1, 2, 3];
+		var b = 4;
+		var expected = [1, 2, 3, 4]
+		var concatedResult = concat(a, b);
+		var comparator = function(array, comparedArray) {
+			var truthyness = 0;
+
+			if(array.length !== comparedArray.length) {
+				return false
+			}
+
+			for(var i = 0; i < array.length; i++) {
+				if(array[i] === comparedArray[i]) {
+					truthyness++;
+				}
+			}
+			if (truthyness === array.length) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		var result = comparator(expected, concatedResult);
+		eq(result, true)
 	},
+	'It should copy nested arrays': function() {
+		var originalArray = [['a']];
+		var concatedArray = concat(originalArray);
+		var comparator = function(array, comparedArray) {
+			var truthyness = 0;
+
+			if(array.length !== comparedArray.length) {
+				return false
+			}
+
+			for(var i = 0; i < array.length; i++) {
+				if(array[i] === comparedArray[i]) {
+					truthyness++;
+				}
+			}
+			if (truthyness === array.length) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		var result = comparator(originalArray, concatedArray);
+		eq(result, true)
+	}
 });
 
 </script>
