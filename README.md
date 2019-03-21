@@ -8,8 +8,8 @@ WatchAndCode exercices for testing chapter. Assignment is to write unit tests fo
 - [x] Array.prototype.indexOf
 - [x] Array.prototype.lastIndexOf
 - [x] Array.prototype.includes
-- [ ] Array.prototype.slice
-- [ ] Array.prototype.join
+- [x] Array.prototype.slice
+- [x] Array.prototype.join
 - [ ] Array.prototype.push
 - [ ] Array.prototype.pop
 - [ ] Array.prototype.shift
