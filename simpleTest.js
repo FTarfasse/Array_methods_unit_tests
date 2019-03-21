@@ -1,5 +1,5 @@
 
-var tinyTestHelper = {
+var simpleTestHelper = {
   renderStats: function(tests, failures) {
 
     var url = window.location.href;
@@ -47,7 +47,7 @@ var tinyTestHelper = {
   }
 }
 
-var TinyTest = {
+var simpleTest = {
 
     run: function(tests) {
         var failures = 0;
@@ -67,7 +67,7 @@ var TinyTest = {
         setTimeout(function() { // Give document a chance to complete
             if (window.document && document.body) {
                 document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
-                tinyTestHelper.renderStats(tests, failures);
+                simpleTestHelper.renderStats(tests, failures);
             }
         }, 0);
     },
@@ -95,9 +95,9 @@ var TinyTest = {
     },
 };
 
-var fail               = TinyTest.fail.bind(TinyTest),
-    assert             = TinyTest.assert.bind(TinyTest),
-    assertEquals       = TinyTest.assertEquals.bind(TinyTest),
-    eq                 = TinyTest.assertEquals.bind(TinyTest), // alias for assertEquals
-    assertStrictEquals = TinyTest.assertStrictEquals.bind(TinyTest),
-    tests              = TinyTest.run.bind(TinyTest);
+var fail               = simpleTest.fail.bind(simpleTest),
+    assert             = simpleTest.assert.bind(simpleTest),
+    assertEquals       = simpleTest.assertEquals.bind(simpleTest),
+    eq                 = simpleTest.assertEquals.bind(simpleTest), // alias for assertEquals
+    assertStrictEquals = simpleTest.assertStrictEquals.bind(simpleTest),
+    tests              = simpleTest.run.bind(simpleTest);
