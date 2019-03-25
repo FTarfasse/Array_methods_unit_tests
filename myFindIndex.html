@@ -1,7 +1,7 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function findIndex(array, callback, optionalThis) {
+function myFindIndex(array, callback, optionalThis) {
 
 	var length = array.length;
 
@@ -13,7 +13,7 @@ function findIndex(array, callback, optionalThis) {
 
 	if(Array.isArray(array) === false) {
 
-		throw new TypeError ('.findIndex is not a function')
+		throw new TypeError ('.myFindIndex is not a function')
 
 	} else {
 
@@ -30,14 +30,14 @@ tests({
 
 	'It should take an array as an argument for the callback': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
-		findIndex(testArray, function() {
+		myFindIndex(testArray, function() {
 		})
 			eq(Array.isArray(testArray), true);
 	},
 	'It should throw an exception if the argument is not an array': function(){
 		var fakeArray = {};
 		try {
-			findIndex(fakeArray, function() {}) 
+			myFindIndex(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
@@ -45,31 +45,31 @@ tests({
 	},
 	'it should pass the ith element as the first argument to the callback': function() {
 		var fruits = ['apples'];
-		findIndex(fruits, function findTheBananas(fruit) {
+		myFindIndex(fruits, function findTheBananas(fruit) {
 			eq(fruit, 'apples')
 		});
   },
   'It should pass in the ith position as the second argument to the callback': function() {
 		var fruits = ['apples'];
-		findIndex(fruits, function findTheBananas(fruit, index) {
+		myFindIndex(fruits, function findTheBananas(fruit, index) {
 			eq(index, 0)
 		});
 	},
 	'It should have the array being processed as third argument of the callback function': function() {
 		var fruits = ['apples'];
-		findIndex(fruits, function findTheBananas(fruit, index, originalFruits) {
+		myFindIndex(fruits, function findTheBananas(fruit, index, originalFruits) {
 			eq(originalFruits, fruits);
 		});
 	},
 	'It should accept an optional this object': function() {
-		findIndex([1], function() {
+		myFindIndex([1], function() {
 			eq(this.description, 'I\'m in the callback');
 		}, {description: 'I\'m in the callback'})
   },
 	'It should execute the callback function once per element': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		findIndex(testArray, function(fruit) {
+		myFindIndex(testArray, function(fruit) {
 			numberOfCallbacks++;
 		})
 		eq(numberOfCallbacks, 3);
@@ -77,7 +77,7 @@ tests({
 	'It should execute the callback while the condition is false': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		findIndex(testArray, function(fruit) {
+		myFindIndex(testArray, function(fruit) {
 			numberOfCallbacks++;
 		})
 		eq(numberOfCallbacks, 3);
@@ -85,7 +85,7 @@ tests({
 	'It should return the index of the matching value': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		var result = findIndex(testArray, function(fruit) {
+		var result = myFindIndex(testArray, function(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'kiwis';
 		})
@@ -94,21 +94,21 @@ tests({
 	},
 	'If condition is not met, it should return -1': function() {
 		var testArray = ['bananas', 'oranges'];
-		var result = findIndex(testArray, function(fruit) {
+		var result = myFindIndex(testArray, function(fruit) {
 			return fruit === 'kiwis';
 		})
 		eq(result, -1);
 	},
 	'If array is empty, it should return -1': function() {
 		var emptyArray = [];
-		var result = findIndex(emptyArray, function() {
+		var result = myFindIndex(emptyArray, function() {
 		})
 		eq(result, -1);
 	},
 	'It should stop executing the callback after a truethy value was found': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		findIndex(testArray, function(fruit) {
+		myFindIndex(testArray, function(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'kiwis';
 		})
@@ -117,7 +117,7 @@ tests({
 	'Elements added after the call of find won\'t be executed by the callback': function() {
 		var fruits = ['apples', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		matchedValue = findIndex(fruits, function isBananas(fruit) {
+		matchedValue = myFindIndex(fruits, function isBananas(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'bananas'
 		})
@@ -126,7 +126,7 @@ tests({
 	},
 	'Elements deleted after the call of find are still executed by the callback': function() {
 		var fruits = ['apples', 'kiwis', 'oranges', 'bananas'];
-		matchedValue = findIndex(fruits, function isBananas(fruit) {
+		matchedValue = myFindIndex(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
 		})
 		var lessBananas = fruits.pop('bananas');

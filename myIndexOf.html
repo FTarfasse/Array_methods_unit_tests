@@ -6,7 +6,7 @@
 // function indexOf(array, searchElement, startingIndex) {
 // }
 
-function indexOf(item, searchedElement, startingIndex) {
+function myIndexOf(item, searchedElement, startingIndex) {
 
   if(startingIndex) {
     i = startingIndex;
@@ -31,7 +31,7 @@ tests({
   'It should throw an error if the first argument is not an object of array type': function() {
     var fakeArray = {name: 'Julie'}
     try {
-      indexOf(fakeArray)
+      myIndexOf(fakeArray)
     } catch(e) {
       var err = (e instanceof TypeError)
     }
@@ -40,26 +40,26 @@ tests({
   'It should return the index of the first element set as argument': function() {
     // debugger;
     var fruits = ['fraises', 'pêches'];
-    var result = indexOf(fruits, 'pêches');
+    var result = myIndexOf(fruits, 'pêches');
     eq(result, 1)
   },
   'It should look for a strict equality on the searched element': function() {
     var fruits = ['fraises', 'pêches'];
-    var result = indexOf(fruits, 'peches');
+    var result = myIndexOf(fruits, 'peches');
     eq(result, -1)
   },
   'It should -1 if the element is not present': function() {
     var fruits = ['fraises', 'pêches'];
-    var result = indexOf(fruits, 'peches');
+    var result = myIndexOf(fruits, 'peches');
     eq(result, -1)
   },
   'It should start from the given index if any': function() {
     var fruits = ['fraises', 'pêches', 'oranges', 'mangues', 'cerises'];
-    var result = indexOf(fruits, 'peches', 2);
+    var result = myIndexOf(fruits, 'peches', 2);
     eq(result, -1)
   },
   'It should accept a string as argument': function() {
-    var result = indexOf('aaaafa', 'f');
+    var result = myIndexOf('aaaafa', 'f');
     eq(result, 4)
   },
 });

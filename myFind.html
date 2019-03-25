@@ -2,7 +2,7 @@
 <script>
 
 // function find(array, callback, initialValue, optionalThis) {};
-function find(array, callback, optionalThis) {
+function myFind(array, callback, optionalThis) {
 	var findCallback = callback;
 	var length = array.length;
 
@@ -12,7 +12,7 @@ function find(array, callback, optionalThis) {
 
 	if(Array.isArray(array) === false) {
 
-		throw new TypeError('.find is not a function')
+		throw new TypeError('.myFind is not a function')
 
 	} else {
 		for(var i = 0; i < length; i++) {
@@ -27,7 +27,7 @@ tests({
 
 	'It should take an array as an argument for the callback': function() {
 		var testArray = [1, 2]
-		find(testArray, function(element) {
+		myFind(testArray, function(element) {
 		})
 		eq(true, Array.isArray(testArray));
 	},
@@ -35,7 +35,7 @@ tests({
 		var isTypeError = false;
 		var notAnArray = {};
     try {
-      find(notAnArray, function () {});
+      myFind(notAnArray, function () {});
     } catch(e) {
       isTypeError = (e instanceof TypeError);
     }
@@ -45,7 +45,7 @@ tests({
 		var testArray = [1, 2, 3, 4];
 		var numberOfCallBacks = 0;
 		
-		find(testArray,function(element) {
+		myFind(testArray,function(element) {
 			while(element !== 10 && numberOfCallBacks < testArray.length) {
 				numberOfCallBacks++;
 			} return numberOfCallBacks;
@@ -53,36 +53,36 @@ tests({
 		eq(numberOfCallBacks, 4);
 	},
 	'it should pass the ith element as the first argument to the callback': function() {
-    find([1], function(number) {
+    myFind([1], function(number) {
       eq(number, 1); // number should be equal to 1
     });
   },
   'It should pass in the ith position as the second argument to the callback': function() {
-    find([1], function(number, index) {
+    myFind([1], function(number, index) {
       eq(index, 0);
     });
   },
 	'It should have the array being processed as third argument of the callback function': function() {
 		var testArray = [1, 2, 3]
-		find(testArray, function(number, index, array) {
+		myFind(testArray, function(number, index, array) {
 			eq(testArray, array);
 		})
 	},
 	'It should accept an optional this object': function() {
-    find([1], function() {
+    myFind([1], function() {
 			eq(this.description, 'I should be accessible inside of the callback');
 		}, {description: 'I should be accessible inside of the callback'});
 	},
 	'It should return the matching value': function() {
 		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
-		matchedValue = find(fruits, function isBananas(fruit) {
+		matchedValue = myFind(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
 		})
 		eq(matchedValue, 'bananas');
 	},
 	'If condition is not met, it should return undefined': function() {
 		var fruits = ['apples', 'kiwis', 'oranges'];
-		matchedValue = find(fruits, function isBananas(fruit) {
+		matchedValue = myFind(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
 		})
 		eq(matchedValue, undefined);
@@ -91,7 +91,7 @@ tests({
 		// debugger;
 		var fruits = ['apples', 'bananas', 'kiwis', 'oranges'];
 		var numberOfCallBacks = 0;
-		find(fruits, function isBananas(fruit) {
+		myFind(fruits, function isBananas(fruit) {
 			numberOfCallBacks++;
 			return fruit === 'bananas'
 		})
@@ -100,7 +100,7 @@ tests({
 	'Elements added after the call of find won\'t be executed by the callback': function() {
 		// debugger;
 		var fruits = ['apples', 'kiwis', 'oranges'];
-		matchedValue = find(fruits, function isBananas(fruit) {
+		matchedValue = myFind(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
 		})
 		var moreBananas = fruits.push('bananas');
@@ -108,7 +108,7 @@ tests({
 	},
 	'Elements deleted after the call of find are still executed by the callback': function() {
 		var fruits = ['apples', 'kiwis', 'oranges', 'bananas'];
-		matchedValue = find(fruits, function isBananas(fruit) {
+		matchedValue = myFind(fruits, function isBananas(fruit) {
 			return fruit === 'bananas'
 		})
 		var lessBananas = fruits.pop('bananas');

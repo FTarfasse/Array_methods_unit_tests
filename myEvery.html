@@ -1,7 +1,7 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function every(array, callback, optionalThis) {
+function myEvery(array, callback, optionalThis) {
 
 	var length = array.length;
 
@@ -13,7 +13,7 @@ function every(array, callback, optionalThis) {
 
 	if(Array.isArray(array) === false) {
 
-		throw new TypeError ('.every is not a function')
+		throw new TypeError ('.myEvery is not a function')
 
 	} else {
 
@@ -43,51 +43,51 @@ function every(array, callback, optionalThis) {
 tests({
 	'It should take an array as argument': function() {
 		var array = ['yolo'];
-		every(array, function() {
+		myEvery(array, function() {
 			eq(Array.isArray(array), true)
 		});
 	},
 	'It should throw a TyperError if argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			every(fakeArray, function() {}) 
+			myEvery(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
 		eq(genError, true)
 	},
 	'It should take the array[i] as first argument of the callback': function() {
-		every([1], function(num) {
+		myEvery([1], function(num) {
 			eq(num, 1);
 		})
 	},
 	'It should take the element position as second argument of the callback': function() {
-		every([1], function(num, index) {
+		myEvery([1], function(num, index) {
 			eq(index, 0);
 		})
 	},
 	'It should take the array being passed as third argument of the callback': function() {
 		var testArray = [1];
-		every(testArray, function(num, index, array) {
+		myEvery(testArray, function(num, index, array) {
 			eq(array, testArray);
 		})
 	},
 	'It should accept an optional this object': function() {
-		every([], function() {
+		myEvery([], function() {
 			eq(this.description, 'Hi from the callback')
 		},{description: 'Hi from the callback'})
 	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
 		var testArray = [1, 2]
 		var length = testArray.length;
-		every(testArray, function(){
+		myEvery(testArray, function(){
 			eq(length, 2);
 		})
 	},
 	'It should stop executing the callback when falsy value is found': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		var result = every(testArray, function(fruit) {
+		var result = myEvery(testArray, function(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'kiwis';
 		});
@@ -96,7 +96,7 @@ tests({
 	'It should return false if falsy value is found': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		var result = every(testArray, function(fruit) {
+		var result = myEvery(testArray, function(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'kiwis';
 		});
@@ -106,7 +106,7 @@ tests({
 	'It should return true if truethy value is found for every element': function() {
 		var testArray = [1, 2, 3];
 		var numberOfCallbacks = 0;
-		var result = every(testArray, function(num) {
+		var result = myEvery(testArray, function(num) {
 			numberOfCallbacks++;
 			return num < 4;
 		});
@@ -116,7 +116,7 @@ tests({
 	'It should not execute callback on empty values': function() {
 		var testArray = [,,,,,,,,,,,,,,,,,,,,,,,, 3];
 		var numberOfCallbacks = 0;
-		var result = every(testArray, function(num) {
+		var result = myEvery(testArray, function(num) {
 			numberOfCallbacks++;
 			return num < 4;
 		});

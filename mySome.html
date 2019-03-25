@@ -1,7 +1,7 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-function some(array, callback, optionalThis) {
+function mySome(array, callback, optionalThis) {
 
 	var length = array.length;
 
@@ -13,7 +13,7 @@ function some(array, callback, optionalThis) {
 
 	if(Array.isArray(array) === false) {
 
-		throw new TypeError('.some is not a function')
+		throw new TypeError('.mySome is not a function')
 
 	} else {
 		for(var i = 0; i < length; i++) {
@@ -30,51 +30,51 @@ function some(array, callback, optionalThis) {
 tests({
 	'It should take an array as argument': function() {
 		var array = ['yolo'];
-		some(array, function() {
+		mySome(array, function() {
 			eq(Array.isArray(array), true)
 		});
 	},
 	'It should throw a TyperError if argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			some(fakeArray, function() {}) 
+			mySome(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
 		eq(genError, true)
 	},
 	'It should take the array[i] as first argument of the callback': function() {
-		some([1], function(num) {
+		mySome([1], function(num) {
 			eq(num, 1);
 		})
 	},
 	'It should take the element position as second argument of the callback': function() {
-		some([1], function(num, index) {
+		mySome([1], function(num, index) {
 			eq(index, 0);
 		})
 	},
 	'It should take the array being passed as third argument of the callback': function() {
 		var testArray = [1];
-		some(testArray, function(num, index, array) {
+		mySome(testArray, function(num, index, array) {
 			eq(array, testArray);
 		})
 	},
 	'It should accept an optional this object': function() {
-		some([], function() {
+		mySome([], function() {
 			eq(this.description, 'Hi from the callback')
 		},{description: 'Hi from the callback'})
 	},
 	'It should set the range of elements visited by the callback before executing the callback': function() {
 		var testArray = [1, 2]
 		var length = testArray.length;
-		some(testArray, function(){
+		mySome(testArray, function(){
 			eq(length, 2);
 		})
 	},
 	'It should stop executing the callback when truethy value is found': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
 		var numberOfCallbacks = 0;
-		var result = some(testArray, function(fruit) {
+		var result = mySome(testArray, function(fruit) {
 			numberOfCallbacks++;
 			return fruit === 'kiwis';
 		});
@@ -82,7 +82,7 @@ tests({
 	},
 	'It should return true if truethy value is found for one element': function() {
 		var testArray = ['bananas', 'kiwis', 'oranges'];
-		var result = some(testArray, function(fruit) {
+		var result = mySome(testArray, function(fruit) {
 			return fruit === 'kiwis';
 		});
 		eq(result, true);
@@ -90,7 +90,7 @@ tests({
 	'It should not execute callback on empty values': function() {
 		var testArray = [,,,,,,,,,,,,,,,,,,,,,,,, 3];
 		var numberOfCallbacks = 0;
-		var result = some(testArray, function(num) {
+		var result = mySome(testArray, function(num) {
 			numberOfCallbacks++;
 			return num < 4;
 		});

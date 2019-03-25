@@ -13,7 +13,7 @@
 
 'use strict'
 
-function concat(value) {
+function myConcat(value) {
 // check if first argument is an array
 	if(Array.isArray(arguments[0]) === false) {
 
@@ -50,7 +50,7 @@ tests({
 	'Throws TypeError if first argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			concat(fakeArray, function() {}) 
+			myConcat(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
@@ -58,14 +58,14 @@ tests({
 	},
 	'It should return a new array': function() {
 		var originalArray = ['oldisgold'];
-		var result = concat(originalArray);
+		var result = myConcat(originalArray);
 		// eq(concatedArray === originalArray, false)
 		eq(originalArray === result, false)
 	},
 	'It should copy the first array argument': function() {
 		// debugger;
 		var originalArray = ['a'];
-		var concatedArray = concat(originalArray);
+		var concatedArray = myConcat(originalArray);
 		eq(concatedArray instanceof Array === true, true)
 		eq(concatedArray[0], 'a')
 	},
@@ -74,7 +74,7 @@ tests({
 		var a = [1, 2, 3];
 		var b = 4;
 		var expected = [1, 2, 3, 4]
-		var concatedResult = concat(a, b);
+		var concatedResult = myConcat(a, b);
 		var comparator = function(array, comparedArray) {
 			var truthyness = 0;
 
@@ -98,7 +98,7 @@ tests({
 	},
 	'It should copy nested arrays': function() {
 		var originalArray = [['a']];
-		var concatedArray = concat(originalArray);
+		var concatedArray = myConcat(originalArray);
 		var comparator = function(array, comparedArray) {
 			var truthyness = 0;
 

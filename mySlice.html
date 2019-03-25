@@ -19,7 +19,7 @@
 // }
 
 
-function slice(array, startingIndex, endingIndex) {
+function mySlice(array, startingIndex, endingIndex) {
 
 	if(Array.isArray(array) === false) {
 
@@ -61,7 +61,7 @@ tests({
 	'Throws TypeError if first argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			slice(fakeArray, function() {}) 
+			mySlice(fakeArray, function() {}) 
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
@@ -69,13 +69,13 @@ tests({
 	},
 	'It should return a new array': function() {
 		var originalArray = ['oldisgold'];
-		var result = slice(originalArray);
+		var result = mySlice(originalArray);
 		// eq(sliceedArray === originalArray, false)
 		eq(originalArray === result, false)
 	},
 	'It should accept a starting index as second argument to return the new array': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		var slicedFruits = slice(fruits, 0);
+		var slicedFruits = mySlice(fruits, 0);
 		function comparator(array, comparedArray) {
 			var truthyness = 0;
 
@@ -99,7 +99,7 @@ tests({
 	},
 	'If begin is undefined, slice begins from index 0 to return the new array.': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		var slicedFruits = slice(fruits);
+		var slicedFruits = mySlice(fruits);
 		function comparator(array, comparedArray) {
 			var truthyness = 0;
 
@@ -123,12 +123,12 @@ tests({
 	},
 	'If starting index is greater than the length of the sequence, an empty array is returned.': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		var slicedFruits = slice(fruits, 5);
+		var slicedFruits = mySlice(fruits, 5);
 		eq(slicedFruits[0], undefined)
 	},
 	'It should accept a negative starting index, returning minus n elements from the end of the array to return the new array': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		var slicedFruits = slice(fruits, -1);
+		var slicedFruits = mySlice(fruits, -1);
 		function comparator(array, comparedArray) {
 			var truthyness = 0;
 
@@ -152,7 +152,7 @@ tests({
 	},
 	'It should accept an ending index to end the slice': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		var slicedFruits = slice(fruits, 1, 3);
+		var slicedFruits = mySlice(fruits, 1, 3);
 		eq(slicedFruits[0], 'mangues')
 		eq(slicedFruits[1], 'pêches')
 		eq(slicedFruits[2], undefined)
@@ -160,13 +160,13 @@ tests({
 	'Negative end index': function() {
 		// debugger;
 		var alph = ['a', 'b', 'c', 'd', 'e'];
-		var poorAlph = slice(alph, 1, -3);
+		var poorAlph = mySlice(alph, 1, -3);
 		eq(poorAlph[0], 'b')
 		eq(poorAlph[1], undefined)
 	},
 	'It should return an empty array if the negative end index is greater than the sequence': function() {
 		var alph = ['a', 'b', 'c', 'd', 'e'];
-		var poorAlph = slice(alph, 2, -3);
+		var poorAlph = mySlice(alph, 2, -3);
 		eq(poorAlph[0], undefined)
 	}
 })

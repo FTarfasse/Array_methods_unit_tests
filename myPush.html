@@ -1,0 +1,86 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+
+function myPush(array, element) {
+
+	if(Array.isArray(array) === false) {
+		throw new TypeError (array + '.myPush is not a function')
+	}
+	var l = array.length;
+	// var arrayArgs = arguments;
+	// array[l] = arrayArgs[1];
+	// array[l] = element;
+	// array[l] = arguments[1];
+
+	if(arguments.length > 1) {
+
+		if(arguments.length === 2) {
+
+			array[l] = arguments[1];
+
+		} else if(arguments.length > 2) {
+
+			var startingI = arguments.length - (arguments.length - 1);
+			for(var i = startingI; i < arguments.length; i++) {
+				array[l] = arguments[i];
+				l++;
+			}
+
+		}
+	}
+
+	return array.length;
+}
+
+tests({
+	'Throws TypeError if first argument is not an array': function() {
+		var fakeArray = {};
+		var err = false;
+		try {
+			fakeArray.myPush();
+		} catch(e) {
+			var err = (e instanceof TypeError)
+		}
+		eq(err, true);
+	},
+	'It should add the argument element to the array': function() {
+		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
+		myPush(fruits, 'pushing it !');
+		eq(fruits[4], 'pushing it !')
+	},
+	'It should not create a new array': function() {
+		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
+		myPush(fruits, 'will this still be fruits ?');
+		eq(fruits === fruits, true)
+	},
+	'It should return the length of the array given as an argument': function() {
+		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
+		myPush(fruits, 'pushing it !');
+	},
+	'It should add N argument element to the array': function() {
+		// debugger;
+		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
+		myPush(fruits, 'pushing it !', 'roll it !');
+		eq(fruits[4], 'pushing it !')
+		eq(fruits[5], 'roll it !')
+	},
+	'It should work on array like objects': function() {
+		fail();
+	},
+}	)
+;
+
+</script>

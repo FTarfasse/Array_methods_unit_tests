@@ -5,13 +5,13 @@
 //   return accumulator + currentValue;
 // }, 10);
 
-function reduceRight(array, callback, accumulator) {
+function myReduceRight(array, callback, accumulator) {
 
 	var startingIndex = array.length - 1;
 
 	if(Array.isArray(array) === false) {
 
-		throw new TypeError ('.reduceRight is not a function')
+		throw new TypeError ('.myReduceRight is not a function')
 
 	}
 	// ACCUMULATOR IS PRESENT
@@ -65,48 +65,48 @@ function reduceRight(array, callback, accumulator) {
 tests({
 	'It should take an array as argument': function() { 
 		var testArray = [1, 2, 3];
-		reduceRight(testArray, function(){})
+		myReduceRight(testArray, function(){})
 		eq(Array.isArray(testArray), true)
 	},
 	'It should throw a TyperError if argument is not an array': function() { 
 		var fakeArray = {};
 		try {
-			reduceRight(fakeArray, function(){})
+			myReduceRight(fakeArray, function(){})
 		} catch(e) {
 			eq(e instanceof Error, true)
 		}
 	},
 	'It should have the current value as second argument of the callback': function() {
 		var testArray = [1];
-		reduceRight(testArray, function(accumulator, currentValue) {
+		myReduceRight(testArray, function(accumulator, currentValue) {
 			eq(currentValue, 1)
 		}, 10)
 	},
 	'It should have the element position as third argument of the callback': function() {
 		var testArray = [1];
-		reduceRight(testArray, function(accumulator, currentValue, index) {
+		myReduceRight(testArray, function(accumulator, currentValue, index) {
 			eq(index, 0)
 		}, 10)
 	},
 	'It should have the orginal array as fourth argument of the callback': function() {
 		var testArray = [1];
-		reduceRight(testArray, function(accumulator, currentValue, index, array) {
+		myReduceRight(testArray, function(accumulator, currentValue, index, array) {
 			eq(testArray, array)
 		})
 	},
 	'If accumulator is supplied and array is empty, it should return the accumulator argument without calling callback': function() {
 		var emptArray = [];
-		var result = reduceRight(emptArray, function() {}, 0);
+		var result = myReduceRight(emptArray, function() {}, 0);
 		eq(result, 0)
 	},
 	'If no accumulator argument and array has one element, it should return that element without executing callback': function() { 
 		var yolo = ['BAM'];
-		var result = reduceRight(yolo, function() {})
+		var result = myReduceRight(yolo, function() {})
 		eq(result, ['BAM'])
 	},
 	'If no accumulator argument and array is not empty, the last element in the array will be used as accumulator': function() {
 		var yummy = ['there', 'is', 'a', 'filled', 'array', 'here','man']
-		reduceRight(yummy, function(curr, next){
+		myReduceRight(yummy, function(curr, next){
 			return curr + next;
 			eq(curr, 'man')
 		})
@@ -114,7 +114,7 @@ tests({
 	'It should throw an Error if array is empty and no accumulator argument': function() { 
 		var emptyArray = []
 		try {
-			reduceRight(emptyArray, function(){})
+			myReduceRight(emptyArray, function(){})
 		} catch(e) {
 			eq(e instanceof Error, true)
 		}
@@ -123,7 +123,7 @@ tests({
 		// debugger;
 		var numberOfCallbacks = 0;
 		var holyArray = [,,1,,2,,,,];
-		reduceRight(holyArray, function() {
+		myReduceRight(holyArray, function() {
 			numberOfCallbacks++;
 		})
 		eq(numberOfCallbacks, 1)
@@ -131,32 +131,32 @@ tests({
 	'It should skip holes when accumulator': function() {
 		var numberOfCallbacks = 0;
 		var holyArray = [,,1,,2,,,,];
-		reduceRight(holyArray, function() {
+		myReduceRight(holyArray, function() {
 			numberOfCallbacks++;
 		}, 4)
 		eq(numberOfCallbacks, 2)
 	},
 	'It should reduce when accumulator': function() { 
 		// debugger;
-		var sum = reduceRight([1, 2, 3], function(a, b) {
+		var sum = myReduceRight([1, 2, 3], function(a, b) {
 			return a + b;
 		}, 4);
 		eq(sum, 10);
 	},
 	'It should reduce even if no accumulator': function() {
-		var sum = reduceRight([1, 2, 3], function(a, b) {
+		var sum = myReduceRight([1, 2, 3], function(a, b) {
 			return a + b;
 		});
 		eq(sum, 6);
 	},
 	'It should execute the callback from the last element of the array': function() { 
 		var stringArray = ['a', 'b'];
-		var result = reduceRight(stringArray, function(a, b) { return a + b})
+		var result = myReduceRight(stringArray, function(a, b) { return a + b})
 		eq(result, 'ba')
 	},
 	'If accumulator is supplied, callback should start from the last element of the array': function() { 
 		var stringArray = ['a', 'b'];
-		var result = reduceRight(stringArray, function(a, b) { return a + b}, 'c')
+		var result = myReduceRight(stringArray, function(a, b) { return a + b}, 'c')
 		eq(result, 'cba')
 	}
 });

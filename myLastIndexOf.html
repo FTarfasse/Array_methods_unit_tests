@@ -2,7 +2,7 @@
 <script>
 
 'use strict'
-function lastIndexOf(item, searchedElement, startingIndex) {
+function myLastIndexOf(item, searchedElement, startingIndex) {
 
   var i = item.length - 1;
 
@@ -28,7 +28,7 @@ tests({
   'It should throw an error if the first argument is not an object of array type': function() {
     var fakeArray = {name: 'Julie'}
     try {
-      lastIndexOf(fakeArray)
+      myLastIndexOf(fakeArray)
     } catch(e) {
       var err = (e instanceof TypeError)
     }
@@ -36,26 +36,26 @@ tests({
   },
   'It should return the index of the last element set as argument': function() {
     var fruits = ['fraises', 'pêches',,,,,'pêches',,,];
-    var result = lastIndexOf(fruits, 'pêches');
+    var result = myLastIndexOf(fruits, 'pêches');
     eq(result, 6)
   },
   'It should look for a strict equality on the searched element': function() {
     var fruits = ['fraises', 'pêches'];
-    var result = lastIndexOf(fruits, 'peches');
+    var result = myLastIndexOf(fruits, 'peches');
     eq(result, -1)
   },
   'It should return -1 if the element is not present': function() {
     var fruits = ['fraises', 'pêches'];
-    var result = lastIndexOf(fruits, 'peches');
+    var result = myLastIndexOf(fruits, 'peches');
     eq(result, -1)
   },
   'It should start from the given index if any to the beginning': function() {
     var fruits = ['fraises', 'pêches', 'oranges', 'mangues', 'cerises'];
-    var result = lastIndexOf(fruits, 'peches', 2);
+    var result = myLastIndexOf(fruits, 'peches', 2);
     eq(result, -1)
   },
   'It should accept a string as argument': function() {
-    var result = lastIndexOf('aaaafaaaafaaafaaafaaaaafa', 'f');
+    var result = myLastIndexOf('aaaafaaaafaaafaaafaaaaafa', 'f');
     eq(result, 23)
   },
 });

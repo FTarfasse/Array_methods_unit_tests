@@ -13,7 +13,7 @@
 
 'use strict'
 
-function join(array, separator) {
+function myJoin(array, separator) {
 
 	if(Array.isArray(array) === false) {
 
@@ -30,20 +30,17 @@ function join(array, separator) {
 		}
 
 		for(var i = 0; i < array.length; i++) {
-			// managing the absence of last separator
+			// managing holes
 			if(i in array === false) {
 				array[i] = '';
 			}
+			// managing the absence of last separator
 			if(i === array.length - 1) {
 				joinedArray += array[i];
 			} else {
 				joinedArray += array[i] + separatorEl;
 			}
 		}
-
-		// empty arrays
-		// if(Object.keys(array).length === 0) {
-
 
 		return joinedArray;
 
@@ -55,7 +52,7 @@ tests({
 	'Throws TypeError if first argument is not an array': function() {
 		var fakeArray = {};
 		try {
-			join(fakeArray);
+			myJoin(fakeArray);
 			} catch(e) {
 			var genError = (e instanceof TypeError);
 		};
@@ -63,46 +60,32 @@ tests({
 	},
 	'It should return a new string ': function() {
 		var elements = ['earth', 'wind', 'fire', 'water'];
-		var result = join(elements);
+		var result = myJoin(elements);
 		eq(typeof(result) === 'string', true)
 	},
 	'It should return all array elements in a single string': function() {
 		var elements = ['earth', 'wind', 'fire', 'water'];
-		var result = join(elements);
+		var result = myJoin(elements);
 		eq(result, 'earth,wind,fire,water');
 	},
 	'It should merge all elements separated by a comma by default': function() {
 		var elements = ['earth', 'wind', 'fire', 'water'];
-		var result = join(elements);
+		var result = myJoin(elements);
 		eq(result, 'earth,wind,fire,water')
 	},
-	'It should accept a separator as third argument': function() {
-		var elements = ['earth', 'wind', 'fire', 'water'];
-		var result = join(elements, '@');
-		eq(result, 'earth@wind@fire@water')
-	},
-	// 'It should throw an error if separator is not a string': function() {
-	// 	var elements = ['earth', 'wind', 'fire', 'water'];
-  //   try {
-  //     join(elements, 2);
-  //   } catch(e) {
-  //     var isTypeError = (e instanceof TypeError);
-  //   }
-	// 	eq(isTypeError, true);
-	// },
 	'It should return the element with no separator for arrays of length = 1': function() {
 		var element = ['sun'];
-		var result = join(element);
+		var result = myJoin(element);
 		eq(result, 'sun')
 	},
 	'It should return an empty string for empty arrays': function() {
 		var element = [];
-		var result = join(element);
+		var result = myJoin(element);
 		eq(result[0], undefined)
 	},
 	'It should return nothing if an element is undefined or null': function() {
 		var holes = ['one',                     ,'two', , , ,'three']
-		var result = join(holes);
+		var result = myJoin(holes);
 		eq(result, 'one,,two,,,,three')
 	}
 });
