@@ -1,0 +1,109 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myPop = function () {
+	
+	if(Array.isArray(this) === true) {
+		// Empty array scenario
+		if(Object.keys(this).length === 0) {
+			return undefined;
+		}
+		
+		var l = this.length;
+		var popped = this[l - 1];
+		this.length = this.length - 1;
+		return popped;
+	}
+	// Object handling
+	// creates the 0 length property if non-existent or NaN
+	if((!this.length) || isNaN(this.length)) {
+		this.length = 0;
+	} else {
+		this.length = this.length - 1;
+	}
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+	var letMeEAnArrayPlease = '[]';
+	var err = false;
+	try {
+		letMeEAnArrayPlease.myPop()
+	} catch(e) {
+		err = (e instanceof TypeError)
+	}
+	eq(err, true)
+},
+	'It should remove the last element of the array': function() {
+	var one = [1];
+	one.myPop();
+	eq(one.length, 0);
+},
+	'It should return the removed element': function() {
+	var testArray = ['a', 'b'];
+	var result = testArray.myPop();
+	eq(result, 'b');
+},
+	'It should return undefined if the array is empty': function() {
+	var emptyArray = [];
+	var result = emptyArray.myPop();
+	eq(result, undefined);
+},
+	'It should modify the length of the array': function() {
+	var one = [1];
+	eq(one.length, 1)
+	one.myPop();
+	eq(one.length, 0);
+},
+	'It should be callable on array-like objets': function() {
+	var callMeMaybe = {hey: 'I just met you !'};
+	var err = false;
+	try {
+		Array.prototype.myPop.call(callMeMaybe);
+	} catch(e) {
+		err = (e instanceof TypeError);
+	}
+	eq(err, false)
+},
+	'It should add a 0 length property to the array-like object if none': function() {
+	var callMeMaybe = {hey: 'I just met you !'};
+	eq(callMeMaybe.length, undefined);
+	Array.prototype.myPop.call(callMeMaybe);
+	eq(callMeMaybe.length, 0);
+},
+	'It should substract 1 to the existing numeric length of the array-like object'	: function() {
+		var arrayWannabe = {
+			name: 'John Rambo',
+			job: 'hero',
+			age: 'ageless',
+			length: 666
+		}
+		Array.prototype.myPop.call(arrayWannabe);
+		eq(arrayWannabe.length, 665);
+	},
+	'It should convert to 0 the length of the array-like object if non-numeric': function() {
+		var arrayWannabe = {
+			name: 'John Rambo',
+			job: 'hero',
+			age: 'ageless',
+			length: 'It\'s a trap !'
+		}
+		Array.prototype.myPop.call(arrayWannabe);
+		eq(arrayWannabe.length, 0);
+	}
+})
+;
+
+</script>
