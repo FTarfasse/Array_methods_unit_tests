@@ -14,40 +14,33 @@
 'use strict'
 
 
-function myPush(array, element) {
+// function myPush(array, element) {
+Array.prototype.myPush = function (element) {
 
-	if(Array.isArray(array) === false) {
-		throw new TypeError (array + '.myPush is not a function')
+	if(Object.prototype.toString(this) !== "[object Object]") {
+		throw new TypeError (Array + '.myPush is not a function')
 	}
-	var l = array.length;
-	// var arrayArgs = arguments;
-	// array[l] = arrayArgs[1];
-	// array[l] = element;
-	// array[l] = arguments[1];
-
-	if(arguments.length > 1) {
-
-		if(arguments.length === 2) {
-
-			array[l] = arguments[1];
-
-		} else if(arguments.length > 2) {
-
-			var startingI = arguments.length - (arguments.length - 1);
-			for(var i = startingI; i < arguments.length; i++) {
-				array[l] = arguments[i];
+	
+	if(!this.length) {
+		this.length = 0;
+	}
+	
+	var l = this.length;
+	
+			for(var i = 0; i < arguments.length; i++) {
+				this[l] = arguments[i];
 				l++;
 			}
 
-		}
-	}
+	// 	}
+	// }
 
-	return array.length;
+	return this.length;
 }
 
 tests({
-	'Throws TypeError if first argument is not an array': function() {
-		var fakeArray = {};
+	'Throws TypeError if first argument is not an object-like array (or array)': function() {
+		var fakeArray = '';
 		var err = false;
 		try {
 			fakeArray.myPush();
@@ -57,28 +50,48 @@ tests({
 		eq(err, true);
 	},
 	'It should add the argument element to the array': function() {
+		// debugger;
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		myPush(fruits, 'pushing it !');
+		fruits.myPush('pushing it !');
 		eq(fruits[4], 'pushing it !')
 	},
 	'It should not create a new array': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		myPush(fruits, 'will this still be fruits ?');
+		fruits.myPush('will this still be fruits ?');
 		eq(fruits === fruits, true)
 	},
 	'It should return the length of the array given as an argument': function() {
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		myPush(fruits, 'pushing it !');
+		var result = fruits.myPush( 'pushing it !');
+		eq(result, 5)
 	},
 	'It should add N argument element to the array': function() {
-		// debugger;
 		var fruits = ['bananes', 'mangues', 'pêches', 'cerises'];
-		myPush(fruits, 'pushing it !', 'roll it !');
+		fruits.myPush('pushing it !', 'roll it !');
 		eq(fruits[4], 'pushing it !')
 		eq(fruits[5], 'roll it !')
 	},
-	'It should work on array like objects': function() {
-		fail();
+	'It should be possible to call it or apply it': function() {
+		// debugger;
+		var vegetables = ['parsnip', 'potatoe'];
+		var moreVegs = ['celery', 'beetroot'];
+		Array.prototype.myPush.apply(vegetables, moreVegs);
+		eq(vegetables[2], 'celery')
+		eq(vegetables[3], 'beetroot')
+	},
+	'It should create a length property if non-existent': function() {
+		var fakeArray = {
+			parents: 2,
+		};
+		Array.prototype.myPush.apply(fakeArray);
+		eq(fakeArray.length, 0)
+	},
+	'It should use index 0 if no numeric length property is found ': function() {
+		// debugger;
+		var fakeArray = {
+		};
+		Array.prototype.myPush.call(fakeArray, 'children');
+		eq(fakeArray[0], 'children')
 	},
 }	)
 ;
