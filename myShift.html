@@ -1,0 +1,123 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myShift = function() {
+	
+	if(Array.isArray(this) === true) {
+		// Empty array scenario
+		if(Object.keys(this).length === 0) {
+			return undefined;
+		} else {
+
+			// save shift element for later
+			var myShiftedEl = this[0];
+
+			var l = this.length;
+			var i = 0;
+			// 
+			var sourceArray = this;
+			// shift indexes
+			for(i; i < l; i++) {
+				this[i] = sourceArray[i + 1];
+			}
+			// modify the length
+			this.length = l - 1;
+		
+			return myShiftedEl;
+		}
+	}
+	// Array-like scenario
+	if(!this.length || this.length === NaN) {
+		this.length = 0;
+	} else if(this.length) {
+		this.length -= 1;
+	}
+
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeEAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeEAnArrayPlease.myShift()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+},
+	'It should delete the first element of the array': function() {
+		var array = [1, 2, 3];
+		array.myShift();
+		eq(array[0] !== 1, true)
+	},
+	'It should return the removed element': function() {
+		var array = [1, 2, 3];
+		var result = array.myShift();
+		eq(result, 1)
+	},
+	'It should shift the indexes of remaining elements': function() {
+		var array = [1, 2, 3];
+		array.myShift();
+		eq(array[0], 2);
+		eq(array[1], 3);
+		eq(array[2], undefined);
+	},
+	'It should modify the length of the array': function() {
+		var array = [1, 2, 3];
+		array.myShift();
+		eq(array[0], 2);
+		eq(array[1], 3);
+		eq(array[2], undefined);
+		eq(array.length, 2)
+	},
+	'It should return undefined if the array is empty': function() {
+		var emptyArray = [];
+		var result = emptyArray.myShift();
+		eq(result, undefined)
+	},
+	'It should be possible to call it or apply it': function() {
+		var callMeMaybe = {name: 'Bob'}
+		try {
+			var thisIsGettingNowhere = Array.prototype.myShift.call(callMeMaybe)
+		} catch(e) {
+			var err = (e instanceof TypeError)
+		}
+		eq(err, undefined)
+	},
+	'It should return undefined if length property equals 0, ': function() {
+		var callMeMaybe = {name: 'Bob', length: 0};
+		var thisIsGettingNowhere = Array.prototype.myShift.call(callMeMaybe)
+		eq(thisIsGettingNowhere, undefined)
+	},
+	'It should add a 0 length property to the array-like object if none': function() {
+		var callMeMaybe = {name: 'Bob'};
+		Array.prototype.myShift.call(callMeMaybe)
+		eq(callMeMaybe.length, 0)
+	},
+	'It should substract 1 to the existing numeric length of the array-like object': function() {
+		var callMeMaybe = {name: 'Bob', length: 1};
+		Array.prototype.myShift.call(callMeMaybe)
+		eq(callMeMaybe.length, 0)
+	},
+	'It should convert to 0 the length of the array-like object if non-numeric': function() {
+		var callMeMaybe = {name: 'Bob', length: '1'};
+		Array.prototype.myShift.call(callMeMaybe)
+		eq(callMeMaybe.length, 0)
+	}
+})
+;
+
+</script>
