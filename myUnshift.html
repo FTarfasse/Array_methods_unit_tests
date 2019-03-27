@@ -1,0 +1,94 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myUnshift = function() {
+	var i = 0;
+	var l = this.length;
+	var copiedThis = this;
+	var argsLength = arguments.length;
+	this.length = argsLength + l;
+	this[i + l] = arguments[i];
+
+	return this.length;
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.myUnshift()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+},
+	'It should add an element into the array': function() {
+		var adding = [];
+		adding.myUnshift(1);
+		eq(adding[0], 1)
+	},
+	'It should return the new length of the array': function() {
+		var adding = [];
+		eq(adding.length, 0)
+		adding.myUnshift(1);
+		eq(adding.length, 1)
+	},
+	'It should modify the length of the array': function() {
+		var adding = [];
+		eq(adding.length, 0)
+		adding.myUnshift(1);
+		eq(adding.length, 1)
+	},
+	'It should add the elements at the beginning of the array': function() {
+		var adding = [2];
+		adding.myUnshift(1);
+		eq(adding[0], 1)
+		eq(adding[1], 2)
+	},
+	'It should increment the indexes of existing elements of the array': function() {
+		var adding = [2, 3];
+		adding.myUnshift(1);
+		eq(adding[1], 2);
+		eq(adding[2], 3);
+	},
+	'It should add N elements into the array': function() {
+		var adding = [];
+		adding.myUnshift(1, 2);
+		eq(adding[0], 1);
+		eq(adding[1], 12)
+	},
+	'It should return undefined if the array is empty': function() {
+		fail();
+	},
+	'It should be possible to call it or apply it': function() {
+		fail();
+	},
+	'It should return undefined if length property equals 0, ': function() {
+		fail();
+	},
+	'It should add a 0 length property to the array-like object if none': function() {
+		fail();
+	},
+	'It should substract 1 to the existing numeric length of the array-like object': function() {
+		fail();
+	},
+	'It should convert to 0 the length of the array-like object if non-numeric': function() {
+		fail();
+	}
+})
+;
+
+</script>
