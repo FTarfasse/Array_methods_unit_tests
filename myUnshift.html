@@ -15,11 +15,25 @@
 
 Array.prototype.myUnshift = function() {
 	var i = 0;
-	var l = this.length;
-	var argsLength = arguments.length;
-	
-	this[l] = this[l - 1]; // last item gets + 1
-	this[i] = arguments[i];
+	var argsLength = arguments.length; // 3
+	this.length += argsLength; // 5
+	var l = this.length; // 5
+	var j = l - Object.keys(this).length;
+	var whileCount = 0
+	// move the elements
+
+	// while(j !== 0) {
+	while(whileCount < (l - argsLength)) {
+		this[j + argsLength] = this[j];
+		// this[j] = undefined;
+		j = l - Object.keys(this).length;
+		whileCount++;
+	}
+
+	// fill this with the args
+	for(var i = 0; i < argsLength; i++) {
+		this[i] = arguments[i];
+	}
 
 	return this.length;
 };
@@ -53,11 +67,11 @@ tests({
 		eq(adding.length, 1)
 	},
 	'It should add the elements at the beginning of the array': function() {
-		// debugger;
-		var adding = [2];
-		adding.myUnshift(1);
-		eq(adding[0], 1)
-		eq(adding[1], 2)
+		debugger;
+		var adding = [3, 4, 5, 6];
+		adding.myUnshift(0, 1, 2);
+		eq(adding[0], 0)
+		eq(adding[1], 1)
 	},
 	'It should increment the indexes of existing elements of the array': function() {
 		var adding = [2, 3];
