@@ -14,28 +14,77 @@
 'use strict'
 
 Array.prototype.myUnshift = function() {
-	var i = 0;
-	var argsLength = arguments.length; // 3
-	this.length += argsLength; // 5
-	var l = this.length; // 5
-	var j = l - Object.keys(this).length;
-	var whileCount = 0
-	// move the elements
 
-	// while(j !== 0) {
-	while(whileCount < (l - argsLength)) {
-		this[j + argsLength] = this[j];
-		// this[j] = undefined;
-		j = l - Object.keys(this).length;
-		whileCount++;
+	// ARRAY SCENARIO
+	if(Array.isArray(this) === true){
+		var i = 0;
+		var argsLength = arguments.length; // 3
+		this.length += argsLength; // 5
+		var l = this.length; // 5
+		var j = l - Object.keys(this).length;
+		var whileCount = 0
+
+		// move the elements
+		while(whileCount < (l - argsLength)) {
+			this[j + argsLength] = this[j];
+			j = l - Object.keys(this).length;
+			whileCount++;
+		}
+
+		// fill this with the args
+		for(var i = 0; i < argsLength; i++) {
+			this[i] = arguments[i];
+		}
+
+		return this.length;
+	} 
+
+	// OBJECT SCENARIO
+	// NO NUMERIC OR EXISTING LENGTH PROPERTY
+	if(this.length === undefined || typeof(this.length) !== "number") { // isNan() and NaN led nowhere => !== "number"
+		delete this.length;
+		this.length = 0;
+
+		var i = 0;
+		var argsLength = arguments.length; // 3
+		this.length += argsLength; // 5
+
+		// delete numeric keys
+		for(var k in this) {
+			if(typeof(Number(k)) === "number") {
+				delete this[Number(k)];
+			}
+		}
+
+		// fill this with the args
+		for(var i = 0; i < argsLength; i++) {
+			this[i] = arguments[i];
+		}
+
+	} else {
+		// EXISTING NUMERIC LENGTH
+		var i = 0;
+		var argsLength = arguments.length; // 3
+		this.length += argsLength; // 5
+		var l = this.length; // 5
+		var j = l - Object.keys(this).length;
+		var whileCount = 0
+
+		// delete numeric keys
+		for(var k in this) {
+			if(typeof(Number(k)) === "number") {
+				delete this[Number(k)];
+			}
+		}
+
+		// fill this with the args
+		for(var i = 0; i < argsLength; i++) {
+			this[i] = arguments[i];
+		}
+
+		return this.length;
 	}
 
-	// fill this with the args
-	for(var i = 0; i < argsLength; i++) {
-		this[i] = arguments[i];
-	}
-
-	return this.length;
 };
 
 tests({
@@ -67,7 +116,6 @@ tests({
 		eq(adding.length, 1)
 	},
 	'It should add the elements at the beginning of the array': function() {
-		debugger;
 		var adding = [3, 4, 5, 6];
 		adding.myUnshift(0, 1, 2);
 		eq(adding[0], 0)
@@ -83,23 +131,94 @@ tests({
 		var adding = [];
 		adding.myUnshift(1, 2);
 		eq(adding[0], 1);
-		eq(adding[1], 12)
+		eq(adding[1], 2)
 	},
-	'It should be possible to call it or apply it': function() {
-		fail();
+	'It should be possible to call it or apply it to array-like objects': function() {
+		var callMeMaybe = {
+			lifeform: 'I swear I am an array !'
+		}
+		var err = false;
+		try {
+			Array.prototype.myUnshift.call(callMeMaybe, 0)
+		} catch(e){
+			err = (e instanceof TypeError)
+		}
+		eq(err, false)
 	},
-	'It should return undefined if length property equals 0, ': function() {
-		fail();
+	'It should create a length property if none': function() {
+		var e = {
+			name: 'C3PO'
+		}
+		Array.prototype.myUnshift.call(e)
+		eq(e.length, 0)
 	},
-	'It should add a 0 length property to the array-like object if none': function() {
-		fail();
+	'It should convert non numeric length to the number of inserted elements': function() {
+		var e = {
+			0: 1, 
+			length: '0'
+		}
+		Array.prototype.myUnshift.call(e, 'a', 'b', 'c');
+		eq(e.length, 3)
 	},
-	'It should substract 1 to the existing numeric length of the array-like object': function() {
-		fail();
+	'It should return the length of the array-like object': function() {
+		var e = {
+			0: 1, 
+			length: 0
+		}
+		Array.prototype.myUnshift.call(e);
+		eq(e.length, 0)
 	},
-	'It should convert to 0 the length of the array-like object if non-numeric': function() {
-		fail();
-	}
+	'It should delete numeric keys elements when adding new elements': function() {
+		// debugger;
+		var e = {
+			4: 'Sayonara	', 
+			length: 0
+		}
+		Array.prototype.myUnshift.call(e, 'a', 'b', 'c');
+		eq(e[0],'a');
+		eq(e[1],'b');
+		eq(e[2],'c');
+		eq(e[3], undefined);
+		eq(Object.keys(e).length, 4)
+	},
+	'It should set the non numeric converted property to the last position of the array-like object': function() {
+		var e = {
+			length: '0',
+			0: 1, 
+		}
+		Array.prototype.myUnshift.call(e, 'a');
+		eq(e[0], 'a')
+		eq(Object.keys(e)[1], 'length')
+	},
+	'It should add the elements at the beginning of the array-like object': function() {
+		var e = {
+			0: 1, 
+			length: 0
+		}
+		Array.prototype.myUnshift.call(e, 'a', 'b', 'c');
+		eq(e[0], 'a');
+		eq(e[1], 'b');
+		eq(e[2], 'c');
+	},
+	'It should add the elements with indexes as keys on array-like objects': function() {
+		var e = {
+			length: 0
+		}
+		Array.prototype.myUnshift.call(e, 'a', 'b', 'c');
+		eq(e[0], 'a');
+		eq(e[1], 'b');
+		eq(e[2], 'c');
+	},
+	'It should update the existing length prop to the number of added elements': function() {
+		var e = {
+			0: 1, 
+			1: 1, 
+			2: 2, 
+			length: 0
+		}
+		Array.prototype.myUnshift.call(e, 'a', 'b', 'c')
+		eq(e.length, 3)
+	},
 })
 ;
 
