@@ -17,12 +17,12 @@ Array.prototype.myUnshift = function() {
 
 	// ARRAY SCENARIO
 	if(Array.isArray(this) === true){
-		var i = 0;
+
 		var argsLength = arguments.length; // 3
 		this.length += argsLength; // 5
 		var l = this.length; // 5
 		var j = l - Object.keys(this).length;
-		var whileCount = 0
+		var whileCount = 0;
 
 		// move the elements
 		while(whileCount < (l - argsLength)) {

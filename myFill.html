@@ -1,0 +1,111 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myFill = function(value, startIndex, endIndex) {
+	
+	if(!startIndex) {
+		startIndex = 0;
+	}
+	
+
+	for(startIndex; startIndex < this.length; startIndex++) {
+		this[startIndex] = value;
+	}
+
+	return this
+
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.myFil()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+	},
+	'It should modify all the elements of the array with the value argument': function() {
+		var fillMe = [1, 2, 3];
+		fillMe.myFill(4);
+		eq(fillMe[0], 4)
+		eq(fillMe[1], 4)
+		eq(fillMe[2], 4)
+		eq(fillMe.length, 3)
+	},
+	'It should return the modified array': function() {
+		var fillMe = [1, 2, 3];
+		var result = fillMe.myFill(4);
+		eq(result[0], 4)
+		eq(result[1], 4)
+		eq(result[2], 4)
+	},
+	'It should modify all the elements of the array from the start index argument': function() {
+		var fillMe = [1, 2, 3];
+		fillMe.myFill(4, 1);
+		eq(fillMe[0], 1)
+		eq(fillMe[1], 4)
+		eq(fillMe[2], 4)
+		eq(fillMe.length, 3)
+	},
+	'It should start by default at index 0': function() {
+		var fillMe = [1, 2, 3];
+		fillMe.myFill(4);
+		eq(fillMe[0], 4)
+		eq(fillMe[1], 4)
+		eq(fillMe[2], 4)
+		eq(fillMe.length, 3)
+	},
+	'It should modify all the elements of the array until the end argument': function() {
+		var fillMe = [1, 2, 3];
+		fillMe.myFill(4, 0, 1);
+		eq(fillMe[0], 4)
+		eq(fillMe[1], 4)
+		eq(fillMe[2], 3)
+		eq(fillMe.length, 3)
+	},
+	'It should end by default at this length': function() {
+		fail();
+	},
+	'It should not fill empty arrays': function() {
+		fail();
+		var emptyArray = [];
+		emptyArray.fill(4);
+		eq(Object.keys(emptyArray).length, 0)
+	},
+	'If start is negative, it is treated as length+start where length is the length of the array. ': function() {
+		fail();
+	},
+	'If end is negative, it is treated as length+end.': function() {
+		fail();
+	},
+	'Array-like hell: existing length prop': function() {
+		fail();
+	},
+	'Array-like hell: non-existing length prop': function() {
+		fail();
+	},
+	'Array-like hell: non numeric length prop': function() {
+		fail();
+	},
+	'Array-like hell: empty objects': function() {
+		fail();
+	},
+})
+;
+
+</script>
