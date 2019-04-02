@@ -14,7 +14,7 @@ WatchAndCode exercices for testing chapter. Assignment is to write unit tests fo
 - [x] Array.prototype.pop
 - [x] Array.prototype.shift
 - [x] Array.prototype.unshift
-- [ ] Array.prototype.fill
+- [x] Array.prototype.fill
 - [ ] Array.prototype.reverse
 - [ ] Array.prototype.copyWithin
 - [ ] Array.prototype.sort

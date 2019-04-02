@@ -42,6 +42,7 @@ var simpleTestHelper = {
 
         var victoryImage = document.createElement('img');
         victoryImage.setAttribute('src', totalVictoryMemeUrl);
+        victoryImage.setAttribute('alt', randomNumber);
         document.body.appendChild(victoryImage);
     }
   }

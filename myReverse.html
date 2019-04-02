@@ -1,0 +1,126 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myReverse = function() {
+
+  if(Array.isArray(this) === true) {
+    var copy = new Array;
+    var l = this.length - 1;
+    var i = 0;
+    var futureI = l - i;
+    // copy the elements to a new Array with a new index
+    for(i; i < this.length; i++) {
+      futureI = l - i;
+      copy[futureI] = this[i];
+    };
+    // retransfer from copied array to original array
+    for(var j = 0; j < this.length; j++) {
+      this[j] = copy[j];
+    };
+  } else {
+    //  If not array with length property
+    if(this.length) {
+      var copy = new Array;
+      var iterations = 0
+      var l = Object.keys(this).length;
+      // transfer to copy
+        for(var item in this) {
+          if(!(isNaN(Number(item)))) {
+            copy[(this.length - 1) - Number(item)] = this[Number(item)];
+          } else {
+
+          }
+        }
+
+      // reset enumerable properties in this object
+      for(var item in this) {
+        if(!(isNaN(Number(item))))
+        delete this[item];
+      }
+      // fill the object with enumerable properties
+      for(var i in copy) {
+        this[i] = copy[i];
+      }
+  	}
+
+  }
+  
+  return this;
+
+}; 
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.myReverse()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+  },
+  'It should invert the position of each element': function() {
+    // debugger;
+    var a = [1, 2, 3];
+    var b = a.myReverse();
+    eq(b[0], 3);
+    eq(b[1], 2);
+    eq(b[2], 1);
+  },
+  'It should return the inverted array': function() {
+    var a = [1, 2, 3];
+    var b = a.myReverse();
+    eq(b.length, 3);
+    eq(b[0], 3);
+    eq(b[1], 2);
+    eq(b[2], 1);
+  },
+  'It should not modify the length of the array': function() {
+    var a = [1, 2, 3];
+    eq(a.length, 3)
+    var b = a.myReverse();
+    eq(b.length, 3)
+  },
+  // 'It should sort the values of enumerable properties on array-like objects': function() {
+  //   var e = {0: 'name','5': 'yolo', 56:'test', 1: 'age'};
+  //   var result = Array.prototype.myReverse.call(e);
+  //   // Object.keys() will give back an array of strings
+  //   eq(Object.keys(result)[0], "0")
+  //   eq(Object.keys(result)[1], "1")
+  //   eq(Object.keys(result)[2], "5")
+  //   eq(Object.keys(result)[3], "56")
+  // },
+  'It should update the keys based on the length property (last key = length - 1)': function() {
+    // debugger;
+    var e = {0: 'name', 1: 'age', length: 666};
+    Array.prototype.myReverse.call(e);
+    eq(Number(Object.keys(e)[0]), 664);
+    eq(Number(Object.keys(e)[1]), 665);
+    eq(Object.keys(e)[2], "length");
+    eq(e[664], "age");
+    eq(e[665], "name");
+    eq(e.length, 666);
+  },
+  // 'It should convert numeric-like properties into numbers': function() {
+  //   var e = {'2': 'name',	1: 'age'};
+  //   var result = Array.prototype.myReverse.call(e);
+  //   eq(Object.values(result)[0], "age")
+  //   eq(Object.values(result)[1], "name")
+  // }
+})
+;
+
+</script>
