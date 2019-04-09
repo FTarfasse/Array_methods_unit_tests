@@ -14,14 +14,35 @@
 'use strict'
 
 Array.prototype.myCopyWithin = function(target, start, end) {
-	var copy= this;
+	var copy= new Array;
 	var i = 0;
+	var j = 0;
 
+	if(start < 0) {
+		start = start + this.length;
+	};
+
+	if(end < 0) {
+		end = end + this.length;
+	};
+
+	if(!end) {
+		end = this.length;
+	};
+	// copy the elements
 	for(start; start < end; start++) {
 		copy[i] = this[start];
 		i++;
 	}
-	return copy;
+
+	// for(target; target < this.length; target++) {
+	for(target; target < copy.length; target++) {
+		this[target] = copy[j];
+		j++;
+	}
+
+
+	return this;
 };
 
 tests({
@@ -41,12 +62,24 @@ tests({
 		eq(result.length, 1)
 	},
 	'It should copy elements between start and end index': function() {
-		var result = [0, 1, 2].myCopyWithin(0, 3)
+		var result = [0, 1, 2].myCopyWithin(0, 0, 3)
 		eq(result[0], 0)
 		eq(result[1], 1)
 		eq(result[2], 2)
 	},
+	'It should use the length of the array as end index if no end index is provided': function() {
+		var a = [0, 1, 2, 3, 4, 5];
+		a.myCopyWithin(2, 0);
+		// [0, 1, 0, 1, 2, 3]
+		eq(a[0], 0);
+		eq(a[1], 1);
+		eq(a[2], 0);
+		eq(a[3], 1);
+		eq(a[4], 2);
+		eq(a[5], 3);
+	},
 	'It should place copied elements to the target index of the original array': function () {
+		// debugger;
 		var a  = [0, 1, 2];
 		a.myCopyWithin(0, 1);
 		eq(a[0], 1)
@@ -55,7 +88,6 @@ tests({
 		eq(a.length, 3)
 	},
 	'It should not modify the length of the array': function() {
-		fail();
 		var a  = [0, 1, 2];
 		a.myCopyWithin(0, 1, 2);
 		eq(a.length, 3)
@@ -63,6 +95,22 @@ tests({
 	'It should not return a new array': function() {
 		var a  = [0, 1, 2];
 		eq(a.myCopyWithin(0, 1, 2), a);
+	},
+	'It should use add array length to negative start index': function() {
+		var a  = [0, 1, 2];
+		var result = a.myCopyWithin(0, - 2);
+		eq(result[0], 1);
+		eq(result[1], 2);
+		eq(result[2], 2);
+	},
+	'It should use array length - index if end index is negative': function() {
+		var a  = [0, 1, 2, 3, 4];
+		var result = a.myCopyWithin(0, 2, -1);
+		eq(result[0], 2);
+		eq(result[1], 3);
+		eq(result[2], 2);
+		eq(result[3], 3);
+		eq(result[4], 4);
 	},
 	'It should be callable on array-like objects': function() {
 		var result = [].myCopyWithin.call({length: 5, 3: 1}, 0, 3);
