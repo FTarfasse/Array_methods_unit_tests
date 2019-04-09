@@ -1,0 +1,74 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.myCopyWithin = function(target, start, end) {
+	var copy= this;
+	var i = 0;
+
+	for(start; start < end; start++) {
+		copy[i] = this[start];
+		i++;
+	}
+	return copy;
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.myUnshift()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+	},
+	'It should copy elements from start index to the end of the array': function() {
+		var result = [0].myCopyWithin()
+		eq(result[0], 0)
+		eq(result.length, 1)
+	},
+	'It should copy elements between start and end index': function() {
+		var result = [0, 1, 2].myCopyWithin(0, 3)
+		eq(result[0], 0)
+		eq(result[1], 1)
+		eq(result[2], 2)
+	},
+	'It should place copied elements to the target index of the original array': function () {
+		var a  = [0, 1, 2];
+		a.myCopyWithin(0, 1);
+		eq(a[0], 1)
+		eq(a[1], 2)
+		eq(a[2], 2)
+		eq(a.length, 3)
+	},
+	'It should not modify the length of the array': function() {
+		fail();
+		var a  = [0, 1, 2];
+		a.myCopyWithin(0, 1, 2);
+		eq(a.length, 3)
+	},
+	'It should not return a new array': function() {
+		var a  = [0, 1, 2];
+		eq(a.myCopyWithin(0, 1, 2), a);
+	},
+	'It should be callable on array-like objects': function() {
+		var result = [].myCopyWithin.call({length: 5, 3: 1}, 0, 3);
+		eq(JSON.stringify(result), '{"0":1,"3":1,"length":5}')
+	}
+})
+;
+
+</script>
