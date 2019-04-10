@@ -1,0 +1,90 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+
+Array.prototype.mySort = function(compareFn) {
+
+	// convert to string each element
+	for(var i = 0; i < this.length; i++) {
+		// this[i] = JSON.stringify(this[i]);
+		// if(!(typeof(this[i]) === "string")) {
+			this[i] = this[i].toString();
+		// }
+	}
+
+	var i =0
+	var j = i + 1;
+
+	for(i; i < this.length; i++) {
+		if(!(this[i] < this[j])) {
+			var transitArray = new Array;
+			transitArray[0] = this[j];
+			transitArray[1] = this[i];
+			this[i] = transitArray[0];
+			this[j] = transitArray[1];
+		}
+	}
+
+	return this;
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.mySort()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+	},
+	'It should not return a new array': function() {
+		var a = [0];
+		eq(a, a.sort())
+	},
+	'It should stringify each element of the array': function() {
+		var array = [1, 2];
+		array.mySort();
+		eq(typeof(array[0]), "string");
+		eq(typeof(array[1]), "string");
+	},
+	// 'It should not try to convert strings into strings ...': function() {
+	// 	debugger;
+	// 	var array = ['1', 2];
+	// 	array.mySort();
+	// },
+	'It should minus 1 the index of the next element if inferior to the previous element': function() {
+		debugger;
+		var array = [2, 1];
+		array.mySort();
+		eq(array[0], "1");
+		eq(array[1], "2");
+	},
+	'It should return the sorted array with the original elements (not stringified)': function() {
+		fail();
+	},
+	'It should set undefined elements to the end of the array.': function() {
+		fail();
+	},
+	// 'If compareFunction is supplied, all non-undefined array elements are sorted according to the return value of'
+	'It should be possible to add a compare function as parameter': function() {
+		fail();
+	}
+	// NOTES:
+	// arrays / objects are sorted befor functions befor undefined elements
+})
+;
+
+</script>
