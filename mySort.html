@@ -33,12 +33,21 @@ Array.prototype.mySort = function(compareFn) {
 			this[i] = transitArray[0];
 			this[j] = transitArray[1];
 
-		} else if(this[i] !== undefined && this[j] === undefined){
+		} else if(this[i] === null && this[j] !== undefined){
 
-			return;
+			var transitArray = new Array;
+			transitArray[0] = this[j];
+			transitArray[1] = this[i];
+			this[i] = transitArray[0];
+			this[j] = transitArray[1];
 
 		// COMPARING non-UNDEFINED ELEMENTS
-		} else if((this[i] !== undefined && this[j] !== undefined) && (this[i].toString() > this[j].toString())) {
+		} 
+		else if(
+			(this[i] !== undefined && this[j] !== undefined) && 
+			(this[i] !== null && this[j] !== null) &&
+			(this[i].toString() > this[j].toString())
+			) {
 
 			// SWAP
 			var transitArray = new Array;
@@ -112,7 +121,9 @@ tests({
 		eq(test[1], undefined)
 	},
 	'It should set null elements before undefined elements': function() {
+		// debugger;
 		var a = [undefined, null, 1];
+		a.mySort();
 		eq(a[0], 1);
 		eq(a[1], null);
 		eq(a[2], undefined);
