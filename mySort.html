@@ -22,21 +22,24 @@ Array.prototype.mySort = function(compareFn) {
 	var i = 0
 	// var a = this[i];
 	// var b = this[j];
-	var j = i + 1;
+	var j = 1;
+	var rightness = 0;
 
-	while(this[i].toString() > this[j].toString()) {
+	while(rightness !== (this.length - 1)) {
 
-		for(i; i < (this.length - 1); i++) {
+		// for(i; i < (this.length - 1); i++) {
 
-			if(this[i].toString() > this[j].toString()) {
-				var transitArray = new Array;
-				transitArray[0] = this[j];
-				transitArray[1] = this[i];
-				this[i] = transitArray[0];
-				this[j] = transitArray[1];
-			}
-			j++;
-		}
+		if(this[i].toString() > this[j].toString()) {
+			var transitArray = new Array;
+			transitArray[0] = this[j];
+			transitArray[1] = this[i];
+			this[i] = transitArray[0];
+			this[j] = transitArray[1];
+		};
+		i++;
+		j++;
+		rightness++;
+		// }
 
 		if(j === this.length) {
 			i = 0;
@@ -91,11 +94,18 @@ tests({
 	},
 	'It should sort all the elements': function() {
 		// debugger;
-		var test = [3, 2, 1];
+		var test = [1, 3, 2, 4, 5];
 		test.mySort();
 		eq(test[0], 1);
 		eq(test[1], 2);
 		eq(test[2], 3);
+		eq(test[3], 4);
+		eq(test[4], 5);
+		// var test = [1, 3, 2];
+		// test.mySort();
+		// eq(test[0], 1)
+		// eq(test[1], 2)
+		// eq(test[2], 3)
 	},
 	'It should consider array elements as inferior to numbers.': function() {
 		var test = [2, [1]];
