@@ -20,26 +20,40 @@
 Array.prototype.mySort = function(compareFn) {
 
 	var i = 0
-	// var a = this[i];
-	// var b = this[j];
 	var j = 1;
 	var rightness = 0;
 
+	// IF EVERY PAIR IS RIGHT, THE ARRAY IS RIGHT / SORTED \o/
 	while(rightness !== (this.length - 1)) {
 
-		// for(i; i < (this.length - 1); i++) {
-
-		if(this[i].toString() > this[j].toString()) {
+		if(this[i] === undefined && this[j] !== undefined){
 			var transitArray = new Array;
 			transitArray[0] = this[j];
 			transitArray[1] = this[i];
 			this[i] = transitArray[0];
 			this[j] = transitArray[1];
-		};
+
+		} else if(this[i] !== undefined && this[j] === undefined){
+
+			return;
+
+		// COMPARING non-UNDEFINED ELEMENTS
+		} else if((this[i] !== undefined && this[j] !== undefined) && (this[i].toString() > this[j].toString())) {
+
+			// SWAP
+			var transitArray = new Array;
+			transitArray[0] = this[j];
+			transitArray[1] = this[i];
+			this[i] = transitArray[0];
+			this[j] = transitArray[1];
+			
+		} else {
+		// IF SORTED, INCREASE THE EXACTITUDE OF THE VARIABLE RIGHTNESS
+			rightness++;
+		}
+
 		i++;
 		j++;
-		rightness++;
-		// }
 
 		if(j === this.length) {
 			i = 0;
@@ -67,26 +81,7 @@ tests({
 		var a = [0];
 		eq(a, a.sort())
 	},
-	// 'It should stringify each element of the array': function() {
-	// 	var array = [1, 2];
-	// 	array.mySort();
-	// 	eq(typeof(array[0]), "string");
-	// 	eq(typeof(array[1]), "string");
-	// },
-	// 'It should not try to convert strings into strings ...': function() {
-	// 	debugger;
-	// 	var array = ['1', 2];
-	// 	array.mySort();
-	// },
-	// 'It should minus 1 the index of the next element if inferior to the previous element': function() {
-	// 	// debugger;	
-	// 	var array = [2, 1];
-	// 	array.mySort();
-	// 	eq(array[0], 1);
-	// 	eq(array[1], 2);
-	// },
 	'It should sort numbers by comparing them as strings': function() {
-		// debugger;
 		var test = [2, 100];
 		test.mySort();
 		eq(test[0], 100);
@@ -94,48 +89,33 @@ tests({
 	},
 	'It should sort all the elements': function() {
 		// debugger;
-		var test = [1, 3, 2, 4, 5];
+		var test = [5, 4, 3, 2, 1];
 		test.mySort();
 		eq(test[0], 1);
 		eq(test[1], 2);
 		eq(test[2], 3);
 		eq(test[3], 4);
 		eq(test[4], 5);
-		// var test = [1, 3, 2];
-		// test.mySort();
-		// eq(test[0], 1)
-		// eq(test[1], 2)
-		// eq(test[2], 3)
 	},
-	'It should consider array elements as inferior to numbers.': function() {
+	'It should sort all kind of non-undefined elements': function() {
+		// debugger;
 		var test = [2, [1]];
 		test.mySort();
-		eq(test[0], [1]);
+		eq(Array.isArray(test[0]), true);
+		eq(JSON.stringify(test[0]), "[1]")
 		eq(test[1], 2);
 	},
-	'It should consider numeric elements as inferior to objects.': function() {
-		fail();
+	'It should set undefined elements at the end of the array': function() {
+		var test = [undefined, 1];
+		test.mySort();
+		eq(test[0], 1)
+		eq(test[1], undefined)
 	},
-	'It should consider objects elements as inferior to strings.': function() {
-		fail();
-	},
-	'It should consider string elements inferior to functions.': function() {
-		fail();
-	},
-	'It should consider function elements as inferior to null elements.': function() {
-		fail();
-	},
-	'It should consider null elements as inferior to undefined.': function() {
-		fail();
-	},
-	'It should consider undefined as inferior to empty.': function() {
-		fail();
-	},
-	'It should consider undefined elements as superior to null elements.': function() {
-		fail();
-	},
-	'It should consider empty elements as superior to undefined elements.': function() {
-		fail();
+	'It should set null elements before undefined elements': function() {
+		var a = [undefined, null, 1];
+		eq(a[0], 1);
+		eq(a[1], null);
+		eq(a[2], undefined);
 	},
 	'It should be possible to add a compare function as parameter': function() {
 		fail();
