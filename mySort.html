@@ -21,13 +21,26 @@ Array.prototype.mySort = function(compareFn) {
 
 	var i = 0
 	var j = 1;
-	var rightness = 0;
+	var compare = function (array){
+		var i = 0;
+		var j = i + 1;
+		var truth = 0;
+		for(i; i < array.length - 1; i++) {
+        	if(String(array[i]) < String(array[j])) {
+            	truth++;	
+        	}
+			j++;
+    }
+		return truth;
+	};
+	
+	var rightness = compare(this);
 
 	// IF EVERY PAIR IS RIGHT, THE ARRAY IS RIGHT / SORTED \o/
 	while(rightness !== (this.length - 1)) {
 
 		if(String(this[i]) > String(this[j])) {
-
+			// SWAP
 			var transitArray = new Array;
 			transitArray[0] = this[j];
 			transitArray[1] = this[i];
@@ -35,11 +48,12 @@ Array.prototype.mySort = function(compareFn) {
 			this[j] = transitArray[1];
 
 		} else {
-			rightness++;
+			// DO NOTHING
 		}
 
 		i++;
 		j++;
+		rightness = compare(this);
 
 		if(j === this.length) {
 			i = 0;
@@ -68,6 +82,7 @@ tests({
 		eq(a, a.sort())
 	},
 	'It should sort numbers by comparing them as strings': function() {
+		// debugger;
 		var test = [2, 100];
 		test.mySort();
 		eq(test[0], 100);
