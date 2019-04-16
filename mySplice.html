@@ -1,0 +1,63 @@
+<head>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  <style>
+    body {
+      font-family: 'Indie Flower', serif;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<script src="../simpleTest.js"></script>
+<script>
+
+'use strict'
+// var e = ['one', 'two','three', 'four', 'five']
+Array.prototype.mySplice = function() {
+	if(arguments.length === 0) {
+		return new Array;
+	}
+};
+
+tests({
+	'It should throw an error if not used on an array': function() {
+		var letMeBeAnArrayPlease = '[]';
+		var err = false;
+		try {
+			letMeBeAnArrayPlease.mySplice()
+		} catch(e) {
+			err = (e instanceof TypeError)
+		}
+		eq(err, true)
+	},
+	'It should return an empty array if no argument': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice();
+		eq(result.length, 0);
+		eq(result[0], undefined);
+	},
+	'It should take a start index to delete the elements': function() {
+		fail();
+	},
+	'It should mutate the original array': function() {
+		fail();
+	},
+	'It should take length minus start index as start value if start index is negative': function() {
+		fail();
+	},
+	'It should take a delete index': function() {
+		fail();
+	},
+	'It should take length minus start index as start value if start index is negative': function() {
+		fail();
+	},
+	'It should return the deleted elements': function() {
+		fail();
+	},
+	'It should accept n items to add': function() {
+		fail();
+	}
+})
+;
+
+</script>
