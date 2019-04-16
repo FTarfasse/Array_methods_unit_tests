@@ -11,12 +11,87 @@
 <script src="../simpleTest.js"></script>
 <script>
 
-'use strict'
+// 'use strict'
 // var e = ['one', 'two','three', 'four', 'five']
-Array.prototype.mySplice = function() {
-	if(arguments.length === 0) {
-		return new Array;
+Array.prototype.mySplice = function(startingIndex, deleteCount) {
+
+	var deletedItems = new Array;
+	var j = deletedItems.length;
+	var i = undefined;
+	var end = undefined;
+
+	if(!startingIndex) {
+		i = 0;
 	}
+
+	if( startingIndex === 0 || arguments.length === 0) {
+		return deletedItems;
+	};
+
+	if(startingIndex > 0) {
+		i = startingIndex;
+	} 
+
+	if(startingIndex < 0) {
+		i = this.length + startingIndex;
+	}
+
+	if(deleteCount > 0) {
+		end = deleteCount + startingIndex;
+	} else if(deleteCount <= 0) {
+		return deletedItems;
+	} else if(!deleteCount) {
+		end = this.length;
+	}
+
+	if(arguments.length < 3) {
+		for(i; i < end; i++) {
+
+			deletedItems[j] = this[i];
+			this[i] = undefined;
+			j++;
+			
+		}
+
+		this.length= this.length - j;
+
+	} else if(arguments.length > 2) {
+		
+		var transitArray = new Array;
+		var k = 2;
+		var l = startingIndex + deleteCount;
+		var n = 0;
+
+		// move first part of the array
+		for(var j = 0; j < startingIndex; j++) {
+			transitArray[j] = this[j];
+		}
+		// fill the deletedItems array
+		for(j; j < l; j++) {
+			deletedItems[n] = this[j];
+			n++;
+		}
+		// move the arguments
+		for(k; k < arguments.length; k++) {
+			transitArray[transitArray.length] = arguments[k];
+			// j++;
+		}
+		// move the items after the deleted elements
+		for(l; l < this.length; l++) {
+			transitArray[transitArray.length] = this[l];
+		}
+		// transferring from transit to this
+		i = 0
+		for( var m = 0; m < transitArray.length; m++) {
+			this[i] = transitArray[m];
+			i++;
+		}
+		this.length = transitArray.length;
+		
+	}
+
+	return deletedItems;
+
 };
 
 tests({
@@ -30,32 +105,53 @@ tests({
 		}
 		eq(err, true)
 	},
-	'It should return an empty array if no argument': function() {
+	'It should delete all elements if no arguments is supplied': function() {
+		// debugger;
 		var e = [1, 2, 3, 4, 5];
 		var result = e.mySplice();
-		eq(result.length, 0);
-		eq(result[0], undefined);
-	},
-	'It should take a start index to delete the elements': function() {
-		fail();
-	},
-	'It should mutate the original array': function() {
-		fail();
-	},
-	'It should take length minus start index as start value if start index is negative': function() {
-		fail();
-	},
-	'It should take a delete index': function() {
-		fail();
-	},
-	'It should take length minus start index as start value if start index is negative': function() {
-		fail();
+		eq(e.length, 0);
+		eq(e[0], undefined);
 	},
 	'It should return the deleted elements': function() {
-		fail();
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice();
+		eq(result.length, 5);
+		eq(e[0], undefined);
+	},
+	'It should take a start index to delete the elements': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice(1);
+		eq(e.length, 1);
+		eq(e[0], 1);
+	},
+	'It should take length minus start index as start value if start index is negative': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice(-1);
+		eq(e.length, 4);
+		eq(e[4], undefined);
+		eq(result.length, 1);
+		eq(result[0], 5)
+	},
+	'It should take a delete count argument': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice(1, 2);
+		eq(JSON.stringify(result), "[2,3]")
+	},
+	'It should not remove any element if deleteCount is equal or inferior to 0': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice(2, -2);
+		eq(JSON.stringify(result), "[]")
 	},
 	'It should accept n items to add': function() {
-		fail();
+		debugger;
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice(2, 2, 6);
+		eq(JSON.stringify(result), "[3,4]");
+		eq(JSON.stringify(e), "[1,2,6,5]");
+	},
+	'It should not delete elements if deleteCount is negative and items': function() {
+		var e = [1, 2, 3, 4, 5];
+		var result = e.mySplice()
 	}
 })
 ;
