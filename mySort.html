@@ -38,17 +38,26 @@ Array.prototype.mySort = function(compareFn) {
 
 	// IF EVERY PAIR IS RIGHT, THE ARRAY IS RIGHT / SORTED \o/
 	while(rightness !== (this.length - 1)) {
+		
+		if(!compareFn) {
+			if(String(this[i]) > String(this[j])) {
+				// SWAP
+				var transitArray = new Array;
+				transitArray[0] = this[j];
+				transitArray[1] = this[i];
+				this[i] = transitArray[0];
+				this[j] = transitArray[1];
+			}
+		} else if(compareFn) {
 
-		if(String(this[i]) > String(this[j])) {
-			// SWAP
-			var transitArray = new Array;
-			transitArray[0] = this[j];
-			transitArray[1] = this[i];
-			this[i] = transitArray[0];
-			this[j] = transitArray[1];
-
-		} else {
-			// DO NOTHING
+			if(compareFn(this[i], this[j]) > 0) {
+				// SWAP
+				var transitArray = new Array;
+				transitArray[0] = this[j];
+				transitArray[1] = this[i];
+				this[i] = transitArray[0];
+				this[j] = transitArray[1];
+			}
 		}
 
 		i++;
@@ -121,6 +130,11 @@ tests({
 		eq(a[2], undefined);
 	},
 	'It should be possible to add a compare function as parameter': function() {
+		var numbers = [4, 2, 5, 1, 3];
+		numbers.mySort(function compare(a, b) {return a - b});
+		eq(JSON.stringify(numbers), "[1,2,3,4,5]");
+	},
+	'It should set empty slots to the very end of the array': function() {
 		fail();
 	}
 	// NOTES:
