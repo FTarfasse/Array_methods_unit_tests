@@ -135,7 +135,15 @@ tests({
 		eq(JSON.stringify(numbers), "[1,2,3,4,5]");
 	},
 	'It should set empty slots to the very end of the array': function() {
-		fail();
+		// debugger;
+		var a = [,undefined, null, 1];
+		var result = a.mySort();
+		// [1, null, undefined, empty]
+		eq(result[0], 1);
+		eq(result[1], null);
+		eq(result[2], undefined);
+		eq(result[3], undefined);
+		// fail();
 	}
 	// NOTES:
 	// arrays / objects are sorted befor functions befor undefined elements
